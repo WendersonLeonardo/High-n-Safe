@@ -30,9 +30,8 @@ def bdView():
     return str(resposta)
 
 @app.route("/m")
-def mapView():
-    # return ("Pagina do mapinha")
-    return render_template('mapa.html')
+def mapacalor():
+    return render_template('mapacalor.html')
 
 
 @app.route("/g")
