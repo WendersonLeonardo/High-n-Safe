@@ -50,8 +50,8 @@ def contatView():
 @app.route("/sobre")
 def aboutView():
     return render_template('sobre.html')
-@app.route("/saiba_mais")
 
+@app.route("/saiba_mais")
 def moreView():
     return render_template('saiba_mais.html')
 

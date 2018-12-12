@@ -17,3 +17,20 @@
 # 2 º Agora com venv Ativado faça:
 # pip3 install -r requisitos.txt < - Para baixar as bibliotecas do Python - >
 # 
+
+# ======= Tutorial do Vidal para DB ===== #
+#  acesse o https://www.db4free.net/phpMyAdmin
+# login : alunoufrpe
+# senha : ufrpe2018.2
+#  → no WorkBench voce pode conectar da mesma forma.
+# hostmane : www.db4free.net port 3306
+# username: alunoufrpe
+# Store in vault .. /password :ufrpe2018.2
+# schema: mydb_ufrpe
+#  → No VSCode baixem o extensão : vscode_ database
+# aperte CTRL + Shift + P
+# digite Sql connect , escolhar mysql :
+# hostname: www.db4free.net 
+# root/user: alunoufrpe
+# password: ufrpe2018.2
+# para ver as tabelas o banco esta online pessoal \o/
