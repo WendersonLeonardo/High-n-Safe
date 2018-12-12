@@ -15,11 +15,11 @@ def index2():
 
 @app.route("/v")
 def bdView():
-    conexao = pymysql.connect(host='localhost',user='root',password='root',db='mydb')
+    conexao = pymysql.connect(host='www.db4free.net',user='alunoufrpe',password='ufrpe2018.2',db='mydb_ufrpe')
 
     c = conexao.cursor()
 
-    consulta = '''select * from mydb.sedecsolicitacoes where processo_numero in (SELECT processo_numero FROM mydb.sedecchamados where solicitacao_descricao = "teste") '''
+    consulta = '''select * from sedecsolicitacoes where processo_numero in (SELECT processo_numero FROM sedecchamados where solicitacao_descricao = "teste") '''
 
     c.execute(consulta)
 
