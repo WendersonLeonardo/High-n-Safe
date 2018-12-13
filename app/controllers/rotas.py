@@ -33,6 +33,10 @@ def bdView():
 def mapacalor():
     return render_template('mapacalor.html')
 
+@app.route("/m")
+def mapView():
+    return render_template('mapacalor.html')
+
 
 @app.route("/g")
 def chartsView():
