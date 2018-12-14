@@ -1,4 +1,5 @@
 from app import app
+
 with open('sedecvistorias2.csv', "rb") as ifile:
     read = csv.reader(codecs.iterdecode(ifile, 'utf-8'),delimiter=';')
     for row in read :
@@ -6,7 +7,7 @@ with open('sedecvistorias2.csv', "rb") as ifile:
             continue
         else:
             passarParaBdVistoria(row)
-            
+
     with open('sedectipoocorrencias.csv', "rb") as ifile:
         read = csv.reader(codecs.iterdecode(ifile, 'utf-8'),delimiter=';')
         for row in read :
@@ -14,7 +15,7 @@ with open('sedecvistorias2.csv', "rb") as ifile:
                 continue
             else:
                 passarParaBdTipodeOcorrencia(row)
-        
+
 
     with open('sedecchamados.csv', "rb") as ifile:
         read = csv.reader(codecs.iterdecode(ifile, 'utf-8'),delimiter=';')
@@ -89,18 +90,18 @@ def passarParaBdChamados(tripla):
     processoLocalizacao = tripla[22]
     processoStatus = tripla[23]
     processoDataConclusao = tripla[24]
-    
+
 def passarParaBdLonas(tripla):
 
     ano = int(tripla[0])
     mes = int(tripla[1])
-    processoNumero = int(tripla[2]) 
+    processoNumero = int(tripla[2])
     colocacaoLonaSituacao = tripla[3]
     colocacaoLonaData = tripla[4]
     colocacaoLonaJustificativa = tripla[5]
     colocacaoLonaMetragem = int(tripla[6])
     colocacaoQuantidadePontos = int(tripla[7])
-    
+
 def passarParaBdSolicitacao(tripla):
     ano = int(tripla[0])
     mes = int(tripla[1])
