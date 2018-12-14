@@ -1,8 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Mapinha de Calor Imundo</title>
+    <title>Mapa de Calor</title>
     <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -52,7 +54,7 @@
 
     </div>
 
-    <div id="map"></div>
+    <div class="container" id="map">
     <script>
 
       // This example requires the Visualization library. Include the libraries=visualization
@@ -175,9 +177,10 @@
 
         ];
       }
-    </script>
+    </script></div>
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyClpy6LKvxnAQY3UdNi-VaAGpMPUpLhWEg&libraries=visualization&callback=initMap">
     </script>
   </body>
 </html>
+{% endblock %}
