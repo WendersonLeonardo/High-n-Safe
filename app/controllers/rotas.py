@@ -14,21 +14,21 @@ def index2():
     #return ("Pagina Inicial, use /v para ver o banco")
     return render_template('index.html')
 
-'''@app.route("/v")
-def bdView():
-    conexao = pymysql.connect(host='www.db4free.net',user='alunoufrpe',password='ufrpe2018.2',db='mydb_ufrpe')
+#@app.route("/v")
+#def bdView():
+ #   conexao = pymysql.connect(host='www.db4free.net',user='alunoufrpe',password='ufrpe2018.2',db='mydb_ufrpe')
 
-    c = conexao.cursor()
-    consuta = '''select rpa_codigo,rpa_nome from sedecchamados;'''
-    c.execute(consuta)
-    resporta = c.fetchall()
+  #  c = conexao.cursor()
+    #consuta = '''select rpa_codigo,rpa_nome from sedecchamados;'''
+   # c.execute(consuta)
+    #resporta = c.fetchall()
 
-    for x in resporta:
-        TrancaRua = int(x[0])
-        Beuzebu = x[1]
-        print("%s - %d" % (Beuzebu,TrancaRua))
+   # for x in resporta:
+    #    TrancaRua = int(x[0])
+     #   Beuzebu = x[1]
+      #  print("%s - %d" % (Beuzebu,TrancaRua))
 
-'''
+
    # consulta = '''insert into rpa (id_rpa,nome) values (111,minhaJeba)''' 
 
     #c.execute(consulta)
