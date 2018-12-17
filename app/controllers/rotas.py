@@ -3,7 +3,7 @@ import csv,codecs
 #import pymysql
 from  flask import render_template
 
-from pymysql import cursors
+#from pymysql import cursors
 @app.route("/")
 def index():
     #return ("Pagina Inicial, use /v para ver o banco")
@@ -14,7 +14,7 @@ def index2():
     #return ("Pagina Inicial, use /v para ver o banco")
     return render_template('index.html')
 
-@app.route("/v")
+'''@app.route("/v")
 def bdView():
     conexao = pymysql.connect(host='www.db4free.net',user='alunoufrpe',password='ufrpe2018.2',db='mydb_ufrpe')
 
@@ -34,7 +34,7 @@ def bdView():
     c.execute(consulta)
 
     return ("Cu")
-
+'''
 
 @app.route("/m")
 def mapacalor():
