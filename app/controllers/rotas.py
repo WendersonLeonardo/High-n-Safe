@@ -1,6 +1,6 @@
 from app import app
 import csv,codecs
-import pymysql
+#import pymysql
 from  flask import render_template
 
 from pymysql import cursors
