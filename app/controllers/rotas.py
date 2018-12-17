@@ -28,13 +28,13 @@ def bdView():
         Beuzebu = x[1]
         print("%s - %d" % (Beuzebu,TrancaRua))
 
-
-    consulta = '''insert into rpa (id_rpa,nome) values (111,minhaJeba)''' 
-
-    c.execute(consulta)
-
-    return ("Cu")
 '''
+   # consulta = '''insert into rpa (id_rpa,nome) values (111,minhaJeba)''' 
+
+    #c.execute(consulta)
+
+    #return ("Cu")
+
 
 @app.route("/m")
 def mapacalor():
