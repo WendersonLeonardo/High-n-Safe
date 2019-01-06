@@ -83,24 +83,30 @@ def grafico_tempo_medio():
         if  comp_select_ano != '' and comp_select_ano != None:
             for r in rpa:
                 c = conexao.cursor()
-                consuta = '''select sedecvistorias.processo_numero, solicitacao_data, solicitacao_hora, processo_data_conclusao from sedecchamados, sedecvistorias where sedecvistorias.processo_numero = sedecchamados.processo_numero and sedecchamados.ano =''' + comp_select_ano + ''' and vistoria_rpa_codigo =''' + r +''';'''
+                consuta = '''select sedecvistorias.processo_numero, solicitacao_data, processo_data_conclusao 
+                from sedecchamados, sedecvistorias 
+                where sedecvistorias.processo_numero = sedecchamados.processo_numero 
+                and sedecchamados.ano =''' + comp_select_ano + '''
+                and rpa_codigo =''' + r +'''
+                and processo_situacao = 'completo'
+                and solicitacao_data IS NOT null
+                and processo_data_conclusao IS NOT null;'''
                 c.execute(consuta)
                 resporta = c.fetchall()
 
                 lista = []
                 for x in resporta:
                     data_inicial = str(x[1])
-                    data_final = str(x[3])
+                    data_final = str(x[2])
                     data_final = (data_final[0: 10].replace('/','-'))
-                    if data_final != '' and data_inicial != '':
-                        date_init = datetime.strptime(data_inicial, "%Y-%m-%d").date()
-                        date_final = datetime.strptime(data_final,"%Y-%m-%d").date()
-                        subtracao = abs(date_final - date_init).days
-                        lista.append(subtracao)
+                    #if data_final != '' and data_inicial != '':
+                    date_init = datetime.strptime(data_inicial, "%Y-%m-%d").date()
+                    date_final = datetime.strptime(data_final,"%Y-%m-%d").date()
+                    subtracao = abs(date_final - date_init).days
+                    lista.append(subtracao)
 
-                if len(lista) >0:
-                    tamanho_lista = len(lista)
-                    media = sum(lista)/tamanho_lista
+                if len(lista) > 0:
+                    media = (sum(lista))/len(lista)
                     values.append(media)
                 else:
                     values.append(0.0)
@@ -114,6 +120,39 @@ def grafico_tempo_medio():
 @app.route("/grafico_negligencia", methods=["GET", "POST"])
 def grafico_negligencia():
     if request.method == "POST":
+        comp_select_ano = request.form.get("comp_select_ano")
+        conexao = pymysql.connect(host='www.db4free.net',user='alunoufrpe',password='ufrpe2018.2',db='mydb_ufrpe')
+        values = []
+        if  comp_select_ano != '' and comp_select_ano != None:
+            for r in rpa:
+                c = conexao.cursor()
+                consuta = '''
+                select *
+                from sedecchamados where sedecchamados.rpa_codigo =''' + r + ''' and sedecchamados.ano =''' + comp_select_ano + ''' ;'''
+                c.execute(consuta)
+                resporta = c.fetchall()
+                count = len(resporta)
+                '''for i in resporta:
+                    count+=1'''
+
+                c = conexao.cursor()
+                consuta = '''
+                select *
+                from sedecchamados, sedecvistorias where sedecchamados.processo_numero = sedecvistorias.processo_numero and sedecchamados.rpa_codigo =''' + r + ''' and sedecchamados.ano =''' + comp_select_ano + ''' ;'''
+                c.execute(consuta)
+                resporta = c.fetchall()
+
+                count_vis = len(resporta)
+                '''for i_vis in resporta:
+                    count_vis+=1'''
+
+                if count_vis > count:
+                    sub = count_vis - count
+                else:
+                    sub = count - count_vis
+                values.append(sub)
+            bar_labels = labels
+            bar_values = values
         return render_template("grafico_negligencia.html", title='Grafico 1', max=max(values), labels=bar_labels,
                                values=bar_values, set=zip(values, labels, colors) )
     else:
@@ -144,7 +183,8 @@ def grafico_vitima():
         if  comp_select_ano != '' and comp_select_ano != None:
             for r in rpa:
                 c = conexao.cursor()
-                consuta = '''select distinct(sedecchamados.processo_numero) 
+                consuta = '''
+                select distinct(sedecchamados.processo_numero) 
                             from Solicitacao, sedecchamados 
                             where sedecchamados.Processo_Numero = Solicitacao.processo_numero 
                             and Houve_Vitimas_fatais = 'Sim' 
