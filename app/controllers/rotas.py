@@ -3,8 +3,8 @@ import csv,codecs
 import pymysql
 from  flask import render_template, request
 from  datetime import  datetime
-
 from pymysql import cursors
+
 @app.route("/")
 def index():
     #return ("Pagina Inicial, use /v para ver o banco")
@@ -66,17 +66,19 @@ def moreView():
 def page_not_found(e):
     return render_template("404.html")
 
+
+colors = [
+    "#F7464A", "#46BFBD", "#FDB45C", "#FEDCBA",
+    "#ABCDEF", "#DDDDDD", "#ABCABC", "#4169E1",
+    "#C71585", "#FF4500", "#FEDCBA", "#46BFBD"]
+rpa = ['1', '2', '3', '4', '5', '6']
+labels = ['RPA 1', 'RPA 2', 'RPA 3', 'RPA 4', 'RPA 5', 'RPA 6']
+
 @app.route("/grafico_tempo_medio", methods=["GET", "POST"])
 def grafico_tempo_medio():
     if request.method == "POST":
         comp_select_ano = request.form.get("comp_select_ano")
         conexao = pymysql.connect(host='www.db4free.net',user='alunoufrpe',password='ufrpe2018.2',db='mydb_ufrpe')
-        colors = [
-            "#F7464A", "#46BFBD", "#FDB45C", "#FEDCBA",
-            "#ABCDEF", "#DDDDDD", "#ABCABC", "#4169E1",
-            "#C71585", "#FF4500", "#FEDCBA", "#46BFBD"]
-        rpa = ['1', '2', '3', '4', '5', '6']
-        labels = ['RPA 1', 'RPA 2', 'RPA 3', 'RPA 4', 'RPA 5', 'RPA 6']
         values = []
         if  comp_select_ano != '' and comp_select_ano != None:
             for r in rpa:
@@ -108,3 +110,55 @@ def grafico_tempo_medio():
                                values=bar_values, set=zip(values, labels, colors) )
     else:
         return render_template("grafico_tempo_medio.html")
+
+@app.route("/grafico_negligencia", methods=["GET", "POST"])
+def grafico_negligencia():
+    if request.method == "POST":
+        return render_template("grafico_negligencia.html", title='Grafico 1', max=max(values), labels=bar_labels,
+                               values=bar_values, set=zip(values, labels, colors) )
+    else:
+        return render_template("grafico_negligencia.html")
+
+@app.route("/grafico_risco", methods=["GET", "POST"])
+def grafico_risco():
+    if request.method == "POST":
+        return render_template("grafico_risco.html", title='Grafico 1', max=max(values), labels=bar_labels,
+                               values=bar_values, set=zip(values, labels, colors) )
+    else:
+        return render_template("grafico_risco.html")
+
+@app.route("/grafico_incidente", methods=["GET", "POST"])
+def grafico_incidente():
+    if request.method == "POST":
+        return render_template("grafico_incidente.html", title='Grafico 1', max=max(values), labels=bar_labels,
+                               values=bar_values, set=zip(values, labels, colors) )
+    else:
+        return render_template("grafico_incidente.html")
+
+@app.route("/grafico_vitima", methods=["GET", "POST"])
+def grafico_vitima():
+    if request.method == "POST":
+        comp_select_ano = request.form.get("comp_select_ano")
+        conexao = pymysql.connect(host='www.db4free.net',user='alunoufrpe',password='ufrpe2018.2',db='mydb_ufrpe')
+        values = []
+        if  comp_select_ano != '' and comp_select_ano != None:
+            for r in rpa:
+                c = conexao.cursor()
+                consuta = '''select distinct(sedecchamados.processo_numero) 
+                            from Solicitacao, sedecchamados 
+                            where sedecchamados.Processo_Numero = Solicitacao.processo_numero 
+                            and Houve_Vitimas_fatais = 'Sim' 
+                            and sedecchamados.rpa_codigo =''' + r + '''
+                            and sedecchamados.ano =''' + comp_select_ano + ''' ;'''
+                c.execute(consuta)
+                resporta = c.fetchall()
+                count = 0
+                for i in resporta:
+                    count+=1
+                values.append(count)
+            bar_labels = labels
+            bar_values = values
+        return render_template("grafico_vitima.html", title='Grafico 1', max=max(values), labels=bar_labels,
+                               values=bar_values, set=zip(values, labels, colors) )
+    else:
+        return render_template("grafico_vitima.html")
