@@ -1,7 +1,8 @@
 from app import app
 import csv,codecs
 import pymysql
-from  flask import render_template
+from  flask import render_template, request
+from  datetime import  datetime
 
 from pymysql import cursors
 @app.route("/")
@@ -16,24 +17,19 @@ def index2():
 
 @app.route("/v")
 def bdView():
-    conexao = pymysql.connect(host='www.db4free.net',user='alunoufrpe',password='ufrpe2018.2',db='mydb_ufrpe')
+    conexao = pymysql.connect(host='www.db4free.net', user='alunoufrpe', password='ufrpe2018.2', db='mydb_ufrpe')
 
     c = conexao.cursor()
     consuta = '''select rpa_codigo,rpa_nome from sedecchamados;'''
     c.execute(consuta)
     resporta = c.fetchall()
 
-    for x in resporta:
-        TrancaRua = int(x[0])
-        Beuzebu = x[1]
-        print("%s - %d" % (Beuzebu,TrancaRua))
 
+    #consulta = '' #''''insert into rpa (id_rpa,nome) values (111,minhaJeba)'''
 
-    consulta = '''insert into rpa (id_rpa,nome) values (111,minhaJeba)''' 
+    #c.execute(consulta)
 
-    c.execute(consulta)
-
-    return ("Cu")
+    return (str(resporta))
 
 
 @app.route("/m")
@@ -69,3 +65,46 @@ def moreView():
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template("404.html")
+
+@app.route("/grafico_tempo_medio", methods=["GET", "POST"])
+def grafico_tempo_medio():
+    if request.method == "POST":
+        comp_select_ano = request.form.get("comp_select_ano")
+        conexao = pymysql.connect(host='www.db4free.net',user='alunoufrpe',password='ufrpe2018.2',db='mydb_ufrpe')
+        colors = [
+            "#F7464A", "#46BFBD", "#FDB45C", "#FEDCBA",
+            "#ABCDEF", "#DDDDDD", "#ABCABC", "#4169E1",
+            "#C71585", "#FF4500", "#FEDCBA", "#46BFBD"]
+        rpa = ['1', '2', '3', '4', '5', '6']
+        labels = ['RPA 1', 'RPA 2', 'RPA 3', 'RPA 4', 'RPA 5', 'RPA 6']
+        values = []
+        if  comp_select_ano != '' and comp_select_ano != None:
+            for r in rpa:
+                c = conexao.cursor()
+                consuta = '''select sedecvistorias.processo_numero, solicitacao_data, solicitacao_hora, processo_data_conclusao from sedecchamados, sedecvistorias where sedecvistorias.processo_numero = sedecchamados.processo_numero and sedecchamados.ano =''' + comp_select_ano + ''' and vistoria_rpa_codigo =''' + r +''';'''
+                c.execute(consuta)
+                resporta = c.fetchall()
+
+                lista = []
+                for x in resporta:
+                    data_inicial = str(x[1])
+                    data_final = str(x[3])
+                    data_final = (data_final[0: 10].replace('/','-'))
+                    if data_final != '' and data_inicial != '':
+                        date_init = datetime.strptime(data_inicial, "%Y-%m-%d").date()
+                        date_final = datetime.strptime(data_final,"%Y-%m-%d").date()
+                        subtracao = abs(date_final - date_init).days
+                        lista.append(subtracao)
+
+                if len(lista) >0:
+                    tamanho_lista = len(lista)
+                    media = sum(lista)/tamanho_lista
+                    values.append(media)
+                else:
+                    values.append(0.0)
+            bar_labels = labels
+            bar_values = values
+        return render_template("grafico_tempo_medio.html", title='Grafico 1', max=max(values), labels=bar_labels,
+                               values=bar_values, set=zip(values, labels, colors) )
+    else:
+        return render_template("grafico_tempo_medio.html")
