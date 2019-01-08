@@ -29,7 +29,7 @@ def bdView():
       #  print("%s - %d" % (Beuzebu,TrancaRua))
 
 
-   # consulta = '''insert into rpa (id_rpa,nome) values (111,minhaJeba)''' 
+   # consulta = '''insert into rpa (id_rpa,nome) values (111,minhaJeba)'''
 
     #c.execute(consulta)
 
@@ -40,9 +40,18 @@ def bdView():
 def mapacalor():
     return render_template('mapacalor.html')
 
-@app.route("/m")
+@app.route("/mapavitimas")
+def mapavitimas():
+    return render_template('mapavitimas.html')
+
+
+@app.route("/mapa")
 def mapView():
-    return render_template('mapacalor.html')
+    return render_template('mapaopcao.html')
+
+
+
+
 
 
 @app.route("/g")

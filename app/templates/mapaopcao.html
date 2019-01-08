@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="jumbotron">
+  <div class="container">
+    <h1 class="display-3">High 'n Safe</h1>
+    
+  </div>
+</div>
+
+<div class="container">
+  <!-- Example row of columns -->
+  <div class="row">
+    <div class="col-md-4">
+      <h2>Mapas de calor</h2>
+      <p>Mapa de Calor dos Chamados.</p>
+      <!--<p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>-->
+      <p><a class="btn btn-secondary" href="{{url_for('mapacalor') }}" role="button">View details &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+      <h2>Mapas de calor</h2>
+      <p>Mapa de Calor de alguma coisa.</p>
+      <p><a class="btn btn-secondary" href="{{url_for('mapacalor') }}" role="button">View details &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+      <h2>Mapas de calor</h2>
+      <p>Mapa de acidentes com vitimas.</p>
+      <p><a class="btn btn-secondary" href="{{url_for('mapacalor') }}" role="button">View details &raquo;</a></p>
+    </div>
+
+    <div class="col-md-4">
+      <h2>Mapas de calor</h2>
+      <p>Mapa de acidentes com vitimas fatais.</p>
+      <p><a class="btn btn-secondary" href="{{url_for('mapacalor') }}" role="button">View details &raquo;</a></p>
+    </div>
+
+  </div>
+
+  <hr>
+
+</div> <!-- /container -->
+{% endblock %}
