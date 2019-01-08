@@ -12,7 +12,7 @@
 <div class="jumbotron">
     <h2>RPA com mais ocorrências de incidentes</h2>
     <br>
-    <form method="POST" action="{{ url_for('grafico_negligencia') }}">
+    <form method="POST" action="{{ url_for('grafico_incidente') }}">
         <div class="jumbotron">
             <!--<h2>Buscar por: </h2>-->
             <br>
@@ -33,7 +33,7 @@
             <div class="input-group">
                 <h3>Selecione o tipo de incidente:&nbsp</h3>
                 <span class="input-group-addon"></span>
-                    <select name="comp_select_ano" class="selectpicker form-control">
+                    <select name="comp_select_incidente" class="selectpicker form-control">
                         <option value=""></option>
                         <option value="Imoveis com Danos/RiscoIncendios">Imoveis com Danos/RiscoIncendios</option>
                         <option value="Arvores em Risco">Arvores em Risco</option>
@@ -42,17 +42,17 @@
                         <option value="Desabamento Parcial Imoveis">Desabamento Parcial Imoveis</option>
                         <option value="Invasao de Terreno de Auxilio Moradia">Invasao de Terreno de Auxilio Moradia</option>
                         <option value="Muro com Danos">Muro com Danos</option>
-                        <option value="Tombamento de ArvoresImoveis Alagados">Tombamento de Arvores</option>
-                        <option value="Desabamento Total de Obras de Contencao/Drenagem">Imoveis Alagados</option>
-                        <option value="Elevacao do Nivel do Rio">Desabamento Total de Obras de Contencao/Drenagem</option>
-                        <option value="Desabamento Total Imoveis">Elevacao do Nivel do Rio</option>
-                        <option value="Desabamento Parcial de Obras de Contencao/Drenagem">Desabamento Total Imoveis</option>
-                        <option value="Produtos Quimicos Perigosos">Desabamento Parcial de Obras de Contencao/Drenagem</option>
-                        <option value="Postes em Risco">Produtos Quimicos Perigosos</option>
-                        <option value="Alagamentos">Postes em Risco</option>
-                        <option value="Tombamento de Postes">Alagamentos</option>
-                        <option value="Transbordamentos de Canais">Tombamento de Postes</option>
-                        <option value="">Transbordamentos de Canais</option>
+                        <option value="Tombamento de Arvores">Tombamento de Arvores</option>
+                        <option value="Imoveis Alagados">Imoveis Alagados</option>
+                        <option value="Desabamento Total de Obras de Contencao/Drenagem">Desabamento Total de Obras de Contencao/Drenagem</option>
+                        <option value="Elevacao do Nivel do Rio">Elevacao do Nivel do Rio</option>
+                        <option value="Desabamento Total Imoveis">Desabamento Total Imoveis</option>
+                        <option value="Desabamento Parcial de Obras de Contencao/Drenagem">Desabamento Parcial de Obras de Contencao/Drenagem</option>
+                        <option value="Produtos Quimicos Perigosos">Produtos Quimicos Perigosos</option>
+                        <option value="Postes em Risco">Postes em Risco</option>
+                        <option value="Alagamentos">Alagamentos</option>
+                        <option value="Tombamento de Postes">Tombamento de Postes</option>
+                        <option value="Transbordamentos de Canais">Transbordamentos de Canais</option>
                    </select>
             </div>
             <br>

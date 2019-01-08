@@ -12,24 +12,36 @@
 <div class="jumbotron">
     <h2>Riscos por RPA</h2>
     <br>
-    <form method="POST" action="{{ url_for('grafico_negligencia') }}">
+    <form method="POST" action="{{ url_for('grafico_risco') }}">
         <div class="jumbotron">
             <!--<h2>Buscar por: </h2>-->
             <br>
-            <div class="input-group">
-                <h3>Selecione o ano que deseja consultar:&nbsp</h3>
-                <span class="input-group-addon"></span>
-                <select name="comp_select_ano" class="selectpicker form-control">
-                    <option value=""></option>
-                    <option value="2012">2012</option>
-                    <option value="2013">2013</option>
-                    <option value="2014">2014</option>
-                    <option value="2015">2015</option>
-                    <option value="2016">2016</option>
-                    <option value="2017">2017</option>
-                    <option value="2018">2018</option>
-               </select>
-            </div>
+                <div class="input-group">
+                    <h3>Selecione o ano que deseja consultar:&nbsp</h3>
+                    <span class="input-group-addon"></span>
+                        <select name="comp_select_ano" class="selectpicker form-control">
+                            <option value=""></option>
+                            <option value="2012">2012</option>
+                            <option value="2013">2013</option>
+                            <option value="2014">2014</option>
+                            <option value="2015">2015</option>
+                            <option value="2016">2016</option>
+                            <option value="2017">2017</option>
+                            <option value="2018">2018</option>
+                       </select>
+                </div>
+                <div class="input-group">
+                    <h3>Selecione o tipo de risco:&nbsp</h3>
+                    <span class="input-group-addon"></span>
+                        <select name="comp_select_risco" class="selectpicker form-control">
+                            <option value=""></option>
+                            <option value="Não informado">Não informado</option>
+                            <option value="R1 Baixo">R1 Baixo</option>
+                            <option value="R2 Médio">R2 Médio</option>
+                            <option value="R3 Alto">R3 Alto</option>
+                            <option value="R4 Muito Alto">R4 Muito Alto</option>
+                       </select>
+                </div>
             <br>
             <button type="submit" class="btn btn-lg btn-primary btn-block">Buscar</button>
         </div>

@@ -99,7 +99,6 @@ def grafico_tempo_medio():
                     data_inicial = str(x[1])
                     data_final = str(x[2])
                     data_final = (data_final[0: 10].replace('/','-'))
-                    #if data_final != '' and data_inicial != '':
                     date_init = datetime.strptime(data_inicial, "%Y-%m-%d").date()
                     date_final = datetime.strptime(data_final,"%Y-%m-%d").date()
                     subtracao = abs(date_final - date_init).days
@@ -112,8 +111,14 @@ def grafico_tempo_medio():
                     values.append(0.0)
             bar_labels = labels
             bar_values = values
-        return render_template("grafico_tempo_medio.html", title='Grafico 1', max=max(values), labels=bar_labels,
+            if len(values) == 0:
+                maximo = 0
+            else:
+                maximo = max(values)
+            return render_template("grafico_tempo_medio.html", title='Grafico 1', max=maximo, labels=bar_labels,
                                values=bar_values, set=zip(values, labels, colors) )
+        else:
+            return render_template("grafico_tempo_medio.html")
     else:
         return render_template("grafico_tempo_medio.html")
 
@@ -132,8 +137,6 @@ def grafico_negligencia():
                 c.execute(consuta)
                 resporta = c.fetchall()
                 count = len(resporta)
-                '''for i in resporta:
-                    count+=1'''
 
                 c = conexao.cursor()
                 consuta = '''
@@ -141,10 +144,7 @@ def grafico_negligencia():
                 from sedecchamados, sedecvistorias where sedecchamados.processo_numero = sedecvistorias.processo_numero and sedecchamados.rpa_codigo =''' + r + ''' and sedecchamados.ano =''' + comp_select_ano + ''' ;'''
                 c.execute(consuta)
                 resporta = c.fetchall()
-
                 count_vis = len(resporta)
-                '''for i_vis in resporta:
-                    count_vis+=1'''
 
                 if count_vis > count:
                     sub = count_vis - count
@@ -153,24 +153,78 @@ def grafico_negligencia():
                 values.append(sub)
             bar_labels = labels
             bar_values = values
-        return render_template("grafico_negligencia.html", title='Grafico 1', max=max(values), labels=bar_labels,
+            if len(values) == 0:
+                maximo = 0
+            else:
+                maximo = max(values)
+            return render_template("grafico_negligencia.html", title='Grafico 1', max=maximo, labels=bar_labels,
                                values=bar_values, set=zip(values, labels, colors) )
+        else:
+            return render_template("grafico_negligencia.html")
     else:
         return render_template("grafico_negligencia.html")
 
 @app.route("/grafico_risco", methods=["GET", "POST"])
 def grafico_risco():
     if request.method == "POST":
-        return render_template("grafico_risco.html", title='Grafico 1', max=max(values), labels=bar_labels,
+        comp_select_ano = request.form.get("comp_select_ano")
+        comp_select_risco = request.form.get("comp_select_risco")
+        risco = '"'+ comp_select_risco +'"'
+        conexao = pymysql.connect(host='www.db4free.net',user='alunoufrpe',password='ufrpe2018.2',db='mydb_ufrpe')
+        values = []
+        if  comp_select_ano != '' and comp_select_ano != None and comp_select_risco != '' and comp_select_risco != None :
+            for r in rpa:
+                c = conexao.cursor()
+                consuta = '''SELECT COUNT(processo_numero) FROM sedecvistorias WHERE ano =''' + comp_select_ano + ''' AND vistoria_risco =''' + risco + ''' AND vistoria_rpa_codigo =''' + r + ''';'''
+                c.execute(consuta)
+                resporta = c.fetchall()
+                valor = str(resporta)
+                valor = valor.replace(')','')
+                valor = valor.replace('(','')
+                valor = valor.replace(',','')
+                values.append(int(valor))
+            bar_labels = labels
+            bar_values = values
+            if len(values)==0:
+                maximo = 0
+            else:
+                maximo = max(values)
+            return render_template("grafico_risco.html", title='Grafico 1', max=maximo, labels=bar_labels,
                                values=bar_values, set=zip(values, labels, colors) )
+        else:
+            return render_template("grafico_risco.html")
     else:
         return render_template("grafico_risco.html")
 
 @app.route("/grafico_incidente", methods=["GET", "POST"])
 def grafico_incidente():
     if request.method == "POST":
-        return render_template("grafico_incidente.html", title='Grafico 1', max=max(values), labels=bar_labels,
+        comp_select_ano = request.form.get("comp_select_ano")
+        comp_select_incidente = request.form.get("comp_select_incidente")
+        incidente = '"' + comp_select_incidente + '"'
+        conexao = pymysql.connect(host='www.db4free.net', user='alunoufrpe', password='ufrpe2018.2', db='mydb_ufrpe')
+        values = []
+        if comp_select_ano != '' and comp_select_ano != None and comp_select_incidente != '' and comp_select_incidente != None:
+            for r in rpa:
+                c = conexao.cursor()
+                consuta = '''SELECT COUNT(sedecvistorias.processo_numero) FROM sedecvistorias, sedectipoocorrencias, sedecchamados WHERE sedecvistorias.processo_numero = sedectipoocorrencias.processo_numero AND sedecchamados.ano ='''+comp_select_ano+''' AND processo_ocorrencia ='''+incidente+''' AND sedecchamados.rpa_codigo ='''+r+''' AND sedecvistorias.processo_numero = sedecchamados.processo_numero;'''
+                c.execute(consuta)
+                resporta = c.fetchall()
+                valor = str(resporta)
+                valor = valor.replace(')','')
+                valor = valor.replace('(','')
+                valor = valor.replace(',','')
+                values.append(int(valor))
+            bar_labels = labels
+            bar_values = values
+            if len(values) == 0:
+                maximo = 0
+            else:
+                maximo = max(values)
+            return render_template("grafico_incidente.html", title='Grafico 1', max=maximo, labels=bar_labels,
                                values=bar_values, set=zip(values, labels, colors) )
+        else:
+            return render_template("grafico_incidente.html")
     else:
         return render_template("grafico_incidente.html")
 
@@ -180,6 +234,7 @@ def grafico_vitima():
         comp_select_ano = request.form.get("comp_select_ano")
         conexao = pymysql.connect(host='www.db4free.net',user='alunoufrpe',password='ufrpe2018.2',db='mydb_ufrpe')
         values = []
+        maximo = 0
         if  comp_select_ano != '' and comp_select_ano != None:
             for r in rpa:
                 c = conexao.cursor()
@@ -198,7 +253,9 @@ def grafico_vitima():
                 values.append(count)
             bar_labels = labels
             bar_values = values
-        return render_template("grafico_vitima.html", title='Grafico 1', max=max(values), labels=bar_labels,
+            return render_template("grafico_vitima.html", title='Grafico 1', max=max(values), labels=bar_labels,
                                values=bar_values, set=zip(values, labels, colors) )
+        else:
+            return render_template("grafico_vitima.html")
     else:
         return render_template("grafico_vitima.html")
