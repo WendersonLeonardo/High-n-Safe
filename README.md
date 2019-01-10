@@ -9,6 +9,10 @@
 # View = HTML (GUI)         < static , templates >
 # Controller = Service      < controllers>
 
+# Requisito para Sistema Windowns
+# Python 3 acesse: https://www.python.org/ftp/python/3.7.2/python-3.7.2.exe para obter o python.
+# Anaconda phompt acesse: https://repo.continuum.io/archive/Anaconda3-2018.12-Windows-x86_64.exe
+# Abrar o Anaconda phompt e digite : conda install -c anaconda python 
 # Microsoft Visual C++ 14.0 is required. Get it with "Microsoft Visual C++ Build Tools":
 
 # ====== Tutorial do Vidal ===== #

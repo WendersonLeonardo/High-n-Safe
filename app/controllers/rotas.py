@@ -31,7 +31,7 @@ def bdView():
 
 @app.route("/m",methods=["GET", "POST"])
 def mapacalor():
-    conexao = pymysql.connect(host='localhost', user='root', password='root', db='mydb_ufrpe')
+    conexao = pymysql.connect(host='www.db4free.net',user='alunoufrpe',password='ufrpe2018.2',db='mydb_ufrpe')
     c = conexao.cursor()
     consulta = '''SELECT `Latitude`, `Longitude` FROM `Localidade do Chamado` WHERE `Endereco`!= "teste" or `Endereco`!= "TESTE";'''
     c.execute(consulta)
@@ -55,7 +55,7 @@ def mapacalor():
 
 @app.route("/mapaLonas")
 def mapaLonas():
-    conexao = pymysql.connect(host='localhost', user='root', password='root', db='mydb_ufrpe')
+    conexao = pymysql.connect(host='www.db4free.net',user='alunoufrpe',password='ufrpe2018.2',db='mydb_ufrpe')
     c = conexao.cursor()
     #consulta = ''' select Latitude,Longitude from `localidade do chamado` where idLocalidade in(SELECT `Localidade do Chamado_idLocalidade` FROM mydb_ufrpe.processo as p , mydb_ufrpe.vistoria as v where p.Numero = v.Processo_Numero); '''
     consulta = '''SELECT latitude,longitude FROM mydb_ufrpe.sedecchamados as c , mydb_ufrpe.sedeclonas as l where c.processo_numero = l.processo_numero and l.colocacao_lona_situacao = "Sim";'''
@@ -82,7 +82,7 @@ def mapaLonas():
 
 @app.route("/mapaCalorVistoria")
 def mapaCalorVistoria():
-    conexao = pymysql.connect(host='localhost', user='root', password='root', db='mydb_ufrpe')
+    conexao = pymysql.connect(host='www.db4free.net',user='alunoufrpe',password='ufrpe2018.2',db='mydb_ufrpe')
     c = conexao.cursor()
     #consulta = ''' select Latitude,Longitude from `localidade do chamado` where idLocalidade in(SELECT `Localidade do Chamado_idLocalidade` FROM mydb_ufrpe.processo as p , mydb_ufrpe.vistoria as v where p.Numero = v.Processo_Numero); '''
     consulta = '''SELECT `Latitude`, `Longitude` FROM `sedecvistorias` as vist, `sedecchamados` as chama WHERE vist.processo_numero = chama.processo_numero ;'''
@@ -108,11 +108,10 @@ def mapaCalorVistoria():
 
 @app.route("/mapaAcidentesVitimas")
 def mapaAcidentesVitimas():
-    conexao = pymysql.connect(host='localhost', user='root', password='root', db='mydb_ufrpe')
+    conexao = pymysql.connect(host='www.db4free.net',user='alunoufrpe',password='ufrpe2018.2',db='mydb_ufrpe')
     c = conexao.cursor()
-    consulta = ''' SELECT l.Latitude, l.Longitude FROM mydb_ufrpe.solicitacao as s , mydb_ufrpe.`localidade do chamado` as l 
-where s.Houve_Vitimas = "Sim" and s.`Localidade do Chamado_idLocalidade`= l.idLocalidade; '''
-    #consulta = '''SELECT `latitude`,`longitude` FROM `sedecchamados` WHERE `solicitacao_vitimas` = "Sim" '''
+    #consulta = ''' SELECT l.Latitude, l.Longitude FROM mydb_ufrpe.solicitacao as s , mydb_ufrpe.`localidade do chamado` as l where s.Houve_Vitimas = "Sim" and s.`Localidade do Chamado_idLocalidade`= l.idLocalidade; '''
+    consulta = '''SELECT `latitude`,`longitude` FROM `sedecchamados` WHERE `solicitacao_vitimas` = "Sim" '''
     c.execute(consulta)
     resposta = c.fetchall()
     lista=[]
@@ -144,12 +143,11 @@ def mapView():
 @app.route("/mapaAcidentesVitimasFatais")
 def mapaAcidentesVitimasFatais ():
 
-    conexao = pymysql.connect(host='localhost', user='root', password='root', db='mydb_ufrpe')
+    conexao = pymysql.connect(host='www.db4free.net',user='alunoufrpe',password='ufrpe2018.2',db='mydb_ufrpe')
     c = conexao.cursor()
 
-    consulta= ''' SELECT l.Latitude, l.Longitude FROM mydb_ufrpe.solicitacao as s , mydb_ufrpe.`localidade do chamado` as l 
-where s.Houve_Vitimas_fatais = "Sim" and s.`Localidade do Chamado_idLocalidade`= l.idLocalidade; '''
-    #consulta = '''SELECT `latitude`,`longitude` FROM `sedecchamados` WHERE `solicitacao_vitimas_fatais` = "Sim" '''
+    #consulta= ''' SELECT l.Latitude, l.Longitude FROM mydb_ufrpe.solicitacao as s , mydb_ufrpe.`localidade do chamado` as l where s.Houve_Vitimas_fatais = "Sim" and s.`Localidade do Chamado_idLocalidade`= l.idLocalidade; '''
+    consulta = '''SELECT `latitude`,`longitude` FROM `sedecchamados` WHERE `solicitacao_vitimas_fatais` = "Sim" '''
     c.execute(consulta)
     resposta = c.fetchall()
     lista=[]
@@ -176,9 +174,55 @@ def chartsView():
     return render_template('grafico.html')
 
 
-@app.route("/r")
-def reportView():
-    return render_template('relatorio.html')
+@app.route("/r", methods=["GET", "POST"])
+def totalInsidenteRpa():
+    if request.method == "POST":
+
+        conexao = pymysql.connect(host='www.db4free.net',user='alunoufrpe',password='ufrpe2018.2',db='mydb_ufrpe')
+        conectar = conexao.cursor()
+
+        regiao=request.form.get("comp_select_regiao")
+        tipo_risco=request.form.get("comp_select_tipo_risco")
+        ano=request.form.get("comp_select_ano")
+
+        lista = []
+        vitima = 0
+        fatal = 0
+
+        if regiao != '':
+            comp_select_regiao = "and sc.rpa_codigo='%s'" %(regiao)
+        if tipo_risco!='':
+            comp_select_tipo_risco = "and sv.vistoria_risco='%s'" %(tipo_risco)
+        if ano!='':
+            comp_select_ano = "and sc.ano=%s " %(ano)
+
+        isSelect="Select nome from rpa where id_rpa=%s" %(regiao)
+        conectar.execute(isSelect)
+        retorno = conectar.fetchall()
+        lista.append(retorno)
+
+        if tipo_risco!='' or regiao!= '' or ano!='':
+            isSelect = """SELECT sc.solicitacao_vitimas, sc.solicitacao_vitimas_fatais FROM sedecchamados sc, sedecvistorias sv WHERE sc.processo_numero=sv.processo_numero %s %s %s""" %(comp_select_ano, comp_select_tipo_risco, comp_select_regiao)
+            conectar.execute(isSelect)
+            retorno = conectar.fetchall()
+
+        else:
+            isSelect = """select solicitacao_vitimas, solicitacao_vitimas_fatais from sedecchamados sc, sedecvistorias sv WHERE sc.processo_numero=sv.processo_numero """
+            conectar.execute(isSelect)
+            retorno = conectar.fetchall()
+
+        for i in retorno:
+            if i[0] == 'Sim':
+                vitima += 1
+            if i[1] == 'Sim':
+                fatal += 1
+
+        lista.append(vitima)
+        lista.append(fatal)
+        lista.append(len(retorno))
+        return render_template('relatorio.html', lista=lista)
+    else:
+        return render_template('relatorio.html')
 
 @app.route("/contato")
 def contatView():
@@ -208,7 +252,7 @@ labels = ['RPA 1', 'RPA 2', 'RPA 3', 'RPA 4', 'RPA 5', 'RPA 6']
 def grafico_tempo_medio():
     if request.method == "POST":
         comp_select_ano = request.form.get("comp_select_ano")
-        conexao = pymysql.connect(host='localhost', user='root', password='root', db='mydb_ufrpe')
+        conexao = pymysql.connect(host='www.db4free.net',user='alunoufrpe',password='ufrpe2018.2',db='mydb_ufrpe')
         values = []
         if  comp_select_ano != '' and comp_select_ano != None:
             for r in rpa:
@@ -256,7 +300,7 @@ def grafico_tempo_medio():
 def grafico_negligencia():
     if request.method == "POST":
         comp_select_ano = request.form.get("comp_select_ano")
-        conexao = pymysql.connect(host='localhost', user='root', password='root', db='mydb_ufrpe')
+        conexao = pymysql.connect(host='www.db4free.net',user='alunoufrpe',password='ufrpe2018.2',db='mydb_ufrpe')
         values = []
         if  comp_select_ano != '' and comp_select_ano != None:
             for r in rpa:
@@ -332,7 +376,7 @@ def grafico_incidente():
         comp_select_ano = request.form.get("comp_select_ano")
         comp_select_incidente = request.form.get("comp_select_incidente")
         incidente = '"' + comp_select_incidente + '"'
-        conexao = pymysql.connect(host='localhost', user='root', password='root', db='mydb_ufrpe')
+        conexao = pymysql.connect(host='www.db4free.net',user='alunoufrpe',password='ufrpe2018.2',db='mydb_ufrpe')
         values = []
         if comp_select_ano != '' and comp_select_ano != None and comp_select_incidente != '' and comp_select_incidente != None:
             for r in rpa:
@@ -362,7 +406,7 @@ def grafico_incidente():
 def grafico_vitima():
     if request.method == "POST":
         comp_select_ano = request.form.get("comp_select_ano")
-        conexao = pymysql.connect(host='localhost', user='root', password='root', db='mydb_ufrpe')
+        conexao = pymysql.connect(host='www.db4free.net',user='alunoufrpe',password='ufrpe2018.2',db='mydb_ufrpe')
         values = []
         maximo = 0
         if  comp_select_ano != '' and comp_select_ano != None:
