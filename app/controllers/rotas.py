@@ -53,10 +53,38 @@ def mapacalor():
     html_string = pernambuco.get_root().render()
     return (html_string)
 
+@app.route("/mapaLonas")
+def mapaLonas():
+    conexao = pymysql.connect(host='localhost', user='root', password='root', db='mydb_ufrpe')
+    c = conexao.cursor()
+    #consulta = ''' select Latitude,Longitude from `localidade do chamado` where idLocalidade in(SELECT `Localidade do Chamado_idLocalidade` FROM mydb_ufrpe.processo as p , mydb_ufrpe.vistoria as v where p.Numero = v.Processo_Numero); '''
+    consulta = '''SELECT latitude,longitude FROM mydb_ufrpe.sedecchamados as c , mydb_ufrpe.sedeclonas as l where c.processo_numero = l.processo_numero and l.colocacao_lona_situacao = "Sim";'''
+    c.execute(consulta)
+    resposta = c.fetchall()
+    lista3=[]
+    for x in resposta:
+        try:
+            lat = float(x[0])
+            long = float(x[1])
+            lista3.append([lat,long])
+
+        except:
+            print("error")
+    pernambuco = folium.Map(location=[-8.0421584, -35.008676],zoom_start=10)
+
+
+    pernambuco.add_child(plugins.HeatMap(lista3,min_opacity=0.7,max_val=0.5,))
+    html_string = pernambuco.get_root().render()
+    return (html_string)
+
+
+
+
 @app.route("/mapaCalorVistoria")
 def mapaCalorVistoria():
     conexao = pymysql.connect(host='localhost', user='root', password='root', db='mydb_ufrpe')
     c = conexao.cursor()
+    #consulta = ''' select Latitude,Longitude from `localidade do chamado` where idLocalidade in(SELECT `Localidade do Chamado_idLocalidade` FROM mydb_ufrpe.processo as p , mydb_ufrpe.vistoria as v where p.Numero = v.Processo_Numero); '''
     consulta = '''SELECT `Latitude`, `Longitude` FROM `sedecvistorias` as vist, `sedecchamados` as chama WHERE vist.processo_numero = chama.processo_numero ;'''
     c.execute(consulta)
     resposta = c.fetchall()
@@ -82,8 +110,9 @@ def mapaCalorVistoria():
 def mapaAcidentesVitimas():
     conexao = pymysql.connect(host='localhost', user='root', password='root', db='mydb_ufrpe')
     c = conexao.cursor()
-
-    consulta = '''SELECT `latitude`,`longitude` FROM `sedecchamados` WHERE `solicitacao_vitimas` = "Sim" '''
+    consulta = ''' SELECT l.Latitude, l.Longitude FROM mydb_ufrpe.solicitacao as s , mydb_ufrpe.`localidade do chamado` as l 
+where s.Houve_Vitimas = "Sim" and s.`Localidade do Chamado_idLocalidade`= l.idLocalidade; '''
+    #consulta = '''SELECT `latitude`,`longitude` FROM `sedecchamados` WHERE `solicitacao_vitimas` = "Sim" '''
     c.execute(consulta)
     resposta = c.fetchall()
     lista=[]
@@ -118,7 +147,9 @@ def mapaAcidentesVitimasFatais ():
     conexao = pymysql.connect(host='localhost', user='root', password='root', db='mydb_ufrpe')
     c = conexao.cursor()
 
-    consulta = '''SELECT `latitude`,`longitude` FROM `sedecchamados` WHERE `solicitacao_vitimas_fatais` = "Sim" '''
+    consulta= ''' SELECT l.Latitude, l.Longitude FROM mydb_ufrpe.solicitacao as s , mydb_ufrpe.`localidade do chamado` as l 
+where s.Houve_Vitimas_fatais = "Sim" and s.`Localidade do Chamado_idLocalidade`= l.idLocalidade; '''
+    #consulta = '''SELECT `latitude`,`longitude` FROM `sedecchamados` WHERE `solicitacao_vitimas_fatais` = "Sim" '''
     c.execute(consulta)
     resposta = c.fetchall()
     lista=[]
