@@ -1,8 +1,5 @@
 # High-n-Safe
 
-
-# Vidal 
-
 # Python para Web usando Flask
 # Modo (MVC) ou 3 camadas   # Nome da pasta ↓ #
 # Models = Parte de Banco   < models >
@@ -24,8 +21,8 @@
 # ======= Tutorial do Prompt de comando Anaconda
 # 1 º Para iniciar Ative o VirtualEnv(maquina virtual) <- Como: Abra o Terminal(Prompt de comando) e navegue até a pasta do projeto \High-n-Safe\venv\Spripts\Activate
 # 2 º Agora com venv Ativado faça:
-# pip3 install -r requisitos.txt          < - Para baixar as bibliotecas do Python - >
-# run.py (Prompt de comando)
+# pip3 install -r \High-n-Safe\requisitos.txt          < - Para baixar as bibliotecas do Python - >
+# \High-n-Safe\run.py (Prompt de comando)
 
 # ======= Tutorial do Vidal para DB ===== #
 #  acesse o https://www.db4free.net/phpMyAdmin
