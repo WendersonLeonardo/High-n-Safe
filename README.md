@@ -15,8 +15,8 @@
 # ====== Tutorial do Prompt de comando ===== #
 # 1 º Para iniciar Ative o VirtualEnv(maquina virtual) <- Como: Abra o Terminal(Prompt de comando) e navegue até a pasta do projeto \High-n-Safe\venv\Spripts\Activate
 # 2 º Agora com venv Ativado faça:
-# pip3 install -r requisitos.txt          < - Para baixar as bibliotecas do Python - >
-# run.py runserver (Prompt de comando)
+# \High-n-Safe\pip3 install -r requisitos.txt          < - Para baixar as bibliotecas do Python - >
+# \High-n-Safe\run.py runserver (Prompt de comando)
 
 # ======= Tutorial do Prompt de comando Anaconda
 # 1 º Para iniciar Ative o VirtualEnv(maquina virtual) <- Como: Abra o Terminal(Prompt de comando) e navegue até a pasta do projeto \High-n-Safe\venv\Spripts\Activate
