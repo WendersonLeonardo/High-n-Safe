@@ -10,17 +10,22 @@
 # Controller = Service      < controllers>
 
 # Requisito para Sistema Windowns
-# Python 3 acesse: https://www.python.org/ftp/python/3.7.2/python-3.7.2.exe para obter o python.
+# Python 3 acesse: https://www.python.org/ftp/python/3.7.2/python-3.7.2.exe para obter o python
 # Anaconda phompt acesse: https://repo.continuum.io/archive/Anaconda3-2018.12-Windows-x86_64.exe
 # Abrar o Anaconda phompt e digite : conda install -c anaconda python 
 # Microsoft Visual C++ 14.0 is required. Get it with "Microsoft Visual C++ Build Tools":
 
-# ====== Tutorial do Vidal ===== #
-# 1 º Para iniciar Ative o VirtualEnv(maquina virtual) <- Como: 
-# Abra o Terminal(Prompt de comando) e navegue até a pasta do projeto \High-n-Safe\venv\Spripts\Activate >
+# ====== Tutorial do Prompt de comando ===== #
+# 1 º Para iniciar Ative o VirtualEnv(maquina virtual) <- Como: Abra o Terminal(Prompt de comando) e navegue até a pasta do projeto \High-n-Safe\venv\Spripts\Activate
 # 2 º Agora com venv Ativado faça:
-# pip3 install -r requisitos.txt < - Para baixar as bibliotecas do Python - >
-# 
+# pip3 install -r requisitos.txt          < - Para baixar as bibliotecas do Python - >
+# run.py runserver (Prompt de comando)
+
+# ======= Tutorial do Prompt de comando Anaconda
+# 1 º Para iniciar Ative o VirtualEnv(maquina virtual) <- Como: Abra o Terminal(Prompt de comando) e navegue até a pasta do projeto \High-n-Safe\venv\Spripts\Activate
+# 2 º Agora com venv Ativado faça:
+# pip3 install -r requisitos.txt          < - Para baixar as bibliotecas do Python - >
+# run.py (Prompt de comando)
 
 # ======= Tutorial do Vidal para DB ===== #
 #  acesse o https://www.db4free.net/phpMyAdmin
