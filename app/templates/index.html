@@ -2,13 +2,12 @@
 
 {% block content %}
     <main role="main">
-
       <!-- Main jumbotron for a primary marketing message or call to action -->
       <div class="jumbotron">
         <div class="container">
           <h1 class="display-3">High 'n Safe</h1>
           <p>Nossa plataforma disponibiliza relatórios e mapas de calor sobre regiãos afetadas por deslizamentos de terras, ocasionados pelas chuvas.</p>
-          <p><a class="btn btn-primary btn-lg" href="{{url_for('moreView') }}" role="button">Saiba mais &raquo;</a></p>
+          <!--<p><a class="btn btn-primary btn-lg" href="{{url_for('moreView') }}" role="button">Saiba mais &raquo;</a></p>-->
         </div>
       </div>
 
@@ -17,25 +16,24 @@
         <div class="row">
           <div class="col-md-4">
             <h2>Relatórios</h2>
-            <p>Clique aqui para acessar os nossos relatórios.</p>
+            <p>Clique aqui para acessar os nossos relatórios:</p>
             <!--<p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>-->
-            <p><a class="btn btn-secondary" href="{{url_for('reportView') }}" role="button">View details &raquo;</a></p>
+            <p><a class="btn btn-primary btn-lg" href="{{url_for('reportView') }}" role="button">Veja mais &raquo;</a></p>
           </div>
           <div class="col-md-4">
             <h2>Gráficos</h2>
-            <p>Clique aqui para acessar os nossos Gráficos.</p>
-            <p><a class="btn btn-secondary" href="{{url_for('chartsView') }}" role="button">View details &raquo;</a></p>
+            <p>Clique aqui para acessar os nossos Gráficos:</p>
+            <p><a class="btn btn-primary btn-lg" href="{{url_for('chartsView') }}" role="button">Veja mais &raquo;</a></p>
           </div>
           <div class="col-md-4">
             <h2>Mapas de calor</h2>
-            <p>Clique aqui para acessar os nossos Mapas de Calor.</p>
-            <p><a class="btn btn-secondary" href="{{url_for('mapView') }}" role="button">View details &raquo;</a></p>
+            <p>Clique aqui para acessar os nossos Mapas de Calor:</p>
+            <p><a class="btn btn-primary btn-lg" href="{{url_for('mapView') }}" role="button">Veja mais &raquo;</a></p>
           </div>
         </div>
 
         <hr>
 
       </div> <!-- /container -->
-
     </main>
 {% endblock %}

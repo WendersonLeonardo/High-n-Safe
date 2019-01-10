@@ -80,7 +80,10 @@
       function acidentesComVitimas(){
 
         //Colocar Marker dos lugares com vitimas
-        var recife = {lat: -8.0633017, lng: -34.9161257};
+
+        {% for x in vitimas%}
+
+        var recife = {lat: {{x[0]}}, lng: {{x[1]}} };
         // exemplo
         var marker = new google.maps.Marker({
              position: recife,
@@ -95,8 +98,11 @@
               content: contentString
             });
 
-
+            {% endfor %}
           map.setMap('marker', map.getMap('marker') ? null:marker);
+
+
+
       }
 
       function acidentesComVitimasFatais(){
@@ -106,7 +112,10 @@
               //var monumentMarker = new.google.maps.Marker ( {position : exLatLng , map : mapa , ícone : foto });
 
 
-              var recife = {lat: -8.0833017, lng: -34.9161257};
+              {% for x in vitimasFatais %}
+
+
+              var recife = {lat: {{x[0]}}, lng: {{x[1]}} }  ;
               // exemplo
                  var marker = new google.maps.Marker({
                     position: recife,
@@ -115,13 +124,17 @@
                     icon:foto
 
                   });
+
                   marker.addListener('click', function() {
                     infowindow.open(map, marker);
                   });
-                  var contentString = 'Cidade Quente da Porra';
+                  var contentString = 'Vitimas Fatais';
                   var infowindow = new google.maps.InfoWindow({
                     content: contentString
                   });
+
+                  {% endfor %}
+
 
             }
 
@@ -159,28 +172,32 @@
 
       // Heatmap data: 500 Points
       function getPoints() {
+
+        {% for x in calor %}
+
+
+        var bosta = new google.maps.LatLng({{x[0]}}, {{x[1]}};
         return [
-          new google.maps.LatLng(-8.0539034, -34.88400160000003),
 
-          new google.maps.LatLng(-8.0372529, -122.445368),
-          new google.maps.LatLng(-8.0375561, -34.893943000000036),
-          new google.maps.LatLng(-8.0372529, -34.893943000000036),
+            
 
-          new google.maps.LatLng(-8.0578381, -34.88289689999999),
-          new google.maps.LatLng(-8.0578381, -34.88289689999999),
-          new google.maps.LatLng(-8.0540251, -34.88235529999997),
-          new google.maps.LatLng(-8.0578381, -34.88289689999999),
 
 
 
 
 
         ];
+
+        {% endfor %}
+
+
       }
+
+
     </script></div>
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyClpy6LKvxnAQY3UdNi-VaAGpMPUpLhWEg&libraries=visualization&callback=initMap">
     </script>
   </body>
-</html>
+
 {% endblock %}

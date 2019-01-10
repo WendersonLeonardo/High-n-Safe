@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>{{ title }}</title>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
+    <link rel="stylesheet" href="\static\css\style5.css">
+</head>
+
+<body>
+<div class="jumbotron">
+    <h2>Chamados com vitimas fatais</h2>
+    <br>
+    <form method="POST" action="{{ url_for('grafico_vitima') }}">
+        <div class="jumbotron">
+            <!--<h2>Buscar por: </h2>-->
+            <br>
+            <div class="input-group">
+                <h3>Selecione o ano que deseja consultar:&nbsp</h3>
+                <span class="input-group-addon"></span>
+                <select name="comp_select_ano" class="selectpicker form-control">
+                    <option value=""></option>
+                    <option value="2015">2015</option>
+                    <option value="2016">2016</option>
+                    <option value="2017">2017</option>
+                    <option value="2018">2018</option>
+               </select>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-lg btn-primary btn-block">Buscar</button>
+        </div>
+    </form>
+<br>
+
+<div class="graficos">
+    <div class="graficos1e2" style="display: flex">
+        <div class="grafico1" style="padding: 20px">
+            <P id="resultado"></P>
+            <canvas id="barchart" width="480" height="300"></canvas>
+            <script>
+              // bar chart data
+              var barData = {
+                labels : [
+                  {% for item in labels %}
+                   "{{ item }}",
+                  {% endfor %}
+            ],
+                datasets : [{
+                  fillColor: "rgba(151,187,205,0.2)",
+                  strokeColor: "rgba(151,187,205,1)",
+                  pointColor: "rgba(151,187,205,1)",
+                  data : [
+                    {% for item in values %}
+                       "{{ item }}",
+                      {% endfor %}
+                ]
+                  }
+                ]
+              }
+             // get bar chart canvas
+             var mychart = document.getElementById("barchart").getContext("2d");
+               steps = 10
+               max = {{max}}
+             // draw bar chart
+             new Chart(mychart).Bar(barData, {
+               scaleOverride: true,
+               scaleSteps: steps,
+               scaleStepWidth: Math.ceil(max / steps),
+               scaleStartValue: 0,
+               scaleShowVerticalLines: true,
+               scaleShowGridLines : true,
+               barShowStroke : true,
+               scaleShowLabels: true
+               }
+             );
+
+            </script>
+        </div>
+        <div class="grafico2" style="padding: 20px">
+            <canvas id="linechart" width="480" height="300"></canvas>
+            <script>
+              // bar chart data
+              var barData = {
+                labels : [
+                  {% for item in labels %}
+                    "{{ item }}",
+                  {% endfor %}
+                ],
+                datasets : [{
+                  fillColor: "rgba(151,187,205,0.2)",
+                  strokeColor: "rgba(151,187,205,1)",
+                  pointColor: "rgba(151,187,205,1)",
+                  pointStrokeColor: "#fff",
+                  pointHighlightFill: "#fff",
+                  pointHighlightStroke: "rgba(151,187,205,1)",
+                  bezierCurve : false,
+                  data : [
+                {% for item in values %}
+                      {{ item }},
+                    {% endfor %}]
+                  }
+            ]
+              }
+              Chart.defaults.global.animationSteps = 50;
+              Chart.defaults.global.tooltipYPadding = 16;
+              Chart.defaults.global.tooltipCornerRadius = 0;
+              Chart.defaults.global.tooltipTitleFontStyle = "normal";
+              Chart.defaults.global.tooltipFillColor = "rgba(0,0,0,0.8)";
+              Chart.defaults.global.animationEasing = "easeOutBounce";
+              Chart.defaults.global.responsive = false;
+              Chart.defaults.global.scaleLineColor = "black";
+              Chart.defaults.global.scaleFontSize = 16;
+              // get line chart canvas
+              var mychart = document.getElementById("linechart").getContext("2d");
+              steps = 10
+              max = {{ max }}
+              // draw bar chart
+              var LineChartDemo = new Chart(mychart).Line(barData, {
+                scaleOverride: true,
+                scaleSteps: steps,
+                scaleStepWidth: Math.ceil(max / steps),
+                scaleStartValue: 0,
+                scaleShowVerticalLines: true,
+                scaleShowGridLines : true,
+                barShowStroke : true,
+                scaleShowLabels: true,
+                bezierCurve: false,
+              });
+               console.log(barData);
+            </script>
+        </div>
+    </div>
+    <div class="grafico3" style="padding: 20px">
+        <canvas id="pizzachart" width="500" height="350"></canvas>
+        <script>
+              var pieData = [
+                {% for item, label, colors in set %}
+                  {
+                    value: {{item}},
+                    label: "{{label}}",
+                    color : "{{colors}}"
+                  },
+                {% endfor %}
+              ];
+              // get pie chart canvas
+              var mychart = document.getElementById("pizzachart").getContext("2d");
+              steps = 10
+              max = {{ max }}
+              // draw pie chart
+              new Chart(document.getElementById("pizzachart").getContext("2d")).Pie(pieData);
+
+        </script>
+    </div>
+</div>
+</body>
+{% endblock %}
