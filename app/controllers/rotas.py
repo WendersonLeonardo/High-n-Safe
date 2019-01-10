@@ -20,7 +20,7 @@ def index2():
 
 @app.route("/v")
 def bdView():
-    conexao = pymysql.connect(host='www.db4free.net', user='alunoufrpe', password='ufrpe2018.2', db='mydb_ufrpe')
+    conexao = pymysql.connect(host='localhost', user='root', password='root', db='mydb_ufrpe')
 
     c = conexao.cursor()
     consuta = '''select rpa_codigo,rpa_nome from sedecchamados;'''
@@ -31,7 +31,7 @@ def bdView():
 
 @app.route("/m",methods=["GET", "POST"])
 def mapacalor():
-    conexao = pymysql.connect(host='www.db4free.net', user='alunoufrpe', password='ufrpe2018.2', db='mydb_ufrpe')
+    conexao = pymysql.connect(host='localhost', user='root', password='root', db='mydb_ufrpe')
     c = conexao.cursor()
     consulta = '''SELECT `Latitude`, `Longitude` FROM `Localidade do Chamado` WHERE `Endereco`!= "teste" or `Endereco`!= "TESTE";'''
     c.execute(consulta)
@@ -55,7 +55,7 @@ def mapacalor():
 
 @app.route("/mapaCalorVistoria")
 def mapaCalorVistoria():
-    conexao = pymysql.connect(host='www.db4free.net', user='alunoufrpe', password='ufrpe2018.2', db='mydb_ufrpe')
+    conexao = pymysql.connect(host='localhost', user='root', password='root', db='mydb_ufrpe')
     c = conexao.cursor()
     consulta = '''SELECT `Latitude`, `Longitude` FROM `sedecvistorias` as vist, `sedecchamados` as chama WHERE vist.processo_numero = chama.processo_numero ;'''
     c.execute(consulta)
@@ -80,7 +80,7 @@ def mapaCalorVistoria():
 
 @app.route("/mapaAcidentesVitimas")
 def mapaAcidentesVitimas():
-    conexao = pymysql.connect(host='www.db4free.net', user='alunoufrpe', password='ufrpe2018.2', db='mydb_ufrpe')
+    conexao = pymysql.connect(host='localhost', user='root', password='root', db='mydb_ufrpe')
     c = conexao.cursor()
 
     consulta = '''SELECT `latitude`,`longitude` FROM `sedecchamados` WHERE `solicitacao_vitimas` = "Sim" '''
@@ -115,7 +115,7 @@ def mapView():
 @app.route("/mapaAcidentesVitimasFatais")
 def mapaAcidentesVitimasFatais ():
 
-    conexao = pymysql.connect(host='www.db4free.net', user='alunoufrpe', password='ufrpe2018.2', db='mydb_ufrpe')
+    conexao = pymysql.connect(host='localhost', user='root', password='root', db='mydb_ufrpe')
     c = conexao.cursor()
 
     consulta = '''SELECT `latitude`,`longitude` FROM `sedecchamados` WHERE `solicitacao_vitimas_fatais` = "Sim" '''
@@ -169,7 +169,7 @@ def page_not_found(e):
 colors = [
     "#F7464A", "#46BFBD", "#FDB45C", "#FEDCBA",
     "#ABCDEF", "#DDDDDD", "#ABCABC", "#4169E1",
-    "#C71585", "#FF4500", "#FEDCBA", "#46BFBD"]
+    "#C71585", "#FF4500", "#FEDCBA", "#46BFBD"] 
 rpa = ['1', '2', '3', '4', '5', '6']
 labels = ['RPA 1', 'RPA 2', 'RPA 3', 'RPA 4', 'RPA 5', 'RPA 6']
 
@@ -177,7 +177,7 @@ labels = ['RPA 1', 'RPA 2', 'RPA 3', 'RPA 4', 'RPA 5', 'RPA 6']
 def grafico_tempo_medio():
     if request.method == "POST":
         comp_select_ano = request.form.get("comp_select_ano")
-        conexao = pymysql.connect(host='www.db4free.net',user='alunoufrpe',password='ufrpe2018.2',db='mydb_ufrpe')
+        conexao = pymysql.connect(host='localhost', user='root', password='root', db='mydb_ufrpe')
         values = []
         if  comp_select_ano != '' and comp_select_ano != None:
             for r in rpa:
@@ -225,7 +225,7 @@ def grafico_tempo_medio():
 def grafico_negligencia():
     if request.method == "POST":
         comp_select_ano = request.form.get("comp_select_ano")
-        conexao = pymysql.connect(host='www.db4free.net',user='alunoufrpe',password='ufrpe2018.2',db='mydb_ufrpe')
+        conexao = pymysql.connect(host='localhost', user='root', password='root', db='mydb_ufrpe')
         values = []
         if  comp_select_ano != '' and comp_select_ano != None:
             for r in rpa:
@@ -269,7 +269,7 @@ def grafico_risco():
         comp_select_ano = request.form.get("comp_select_ano")
         comp_select_risco = request.form.get("comp_select_risco")
         risco = '"'+ comp_select_risco +'"'
-        conexao = pymysql.connect(host='www.db4free.net',user='alunoufrpe',password='ufrpe2018.2',db='mydb_ufrpe')
+        conexao = pymysql.connect(host='localhost', user='root', password='root', db='mydb_ufrpe')
         values = []
         if  comp_select_ano != '' and comp_select_ano != None and comp_select_risco != '' and comp_select_risco != None :
             for r in rpa:
@@ -301,7 +301,7 @@ def grafico_incidente():
         comp_select_ano = request.form.get("comp_select_ano")
         comp_select_incidente = request.form.get("comp_select_incidente")
         incidente = '"' + comp_select_incidente + '"'
-        conexao = pymysql.connect(host='www.db4free.net', user='alunoufrpe', password='ufrpe2018.2', db='mydb_ufrpe')
+        conexao = pymysql.connect(host='localhost', user='root', password='root', db='mydb_ufrpe')
         values = []
         if comp_select_ano != '' and comp_select_ano != None and comp_select_incidente != '' and comp_select_incidente != None:
             for r in rpa:
@@ -331,7 +331,7 @@ def grafico_incidente():
 def grafico_vitima():
     if request.method == "POST":
         comp_select_ano = request.form.get("comp_select_ano")
-        conexao = pymysql.connect(host='www.db4free.net',user='alunoufrpe',password='ufrpe2018.2',db='mydb_ufrpe')
+        conexao = pymysql.connect(host='localhost', user='root', password='root', db='mydb_ufrpe')
         values = []
         maximo = 0
         if  comp_select_ano != '' and comp_select_ano != None:
