@@ -18,7 +18,7 @@ Observação 2: Ao baixar o Python 3 em sua máquina, na tela inicial do instala
 4. Execute a máquina virtual com o comando “activate”;
 5. Execute o pip3 digitando o comando “python get-pip.py”;
 6. Instale as bibliotecas com “pip3 install -r requisitos.txt”;
-7. No MySQL Workbench, crie uma nova conexão:
+7. No MySQL Workbench, crie uma nova conexão;
 8 No campo “Hostname” insira “www.db4free.net”;
 9. No campo “Port” insira “3306”;
 10. No campo “Username” insira “alunoufrpe”;
