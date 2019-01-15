@@ -1,14 +1,10 @@
 # High-n-Safe
 
 # Condições mínimas para utilização:
--Linguagem de programação Python 3;
-
--Ambiente de desenvolvimento. (Recomendamos o PyCharm);
-
--Ferramenta de design para banco de dados para rodar o script SQL. (Recomendamos MySQL Workbench);
-
--Instalação de navegador atualizado (Recomendamos o uso do Google Chrome);
-
+- Linguagem de programação Python 3;
+- Ambiente de desenvolvimento. (Recomendamos o PyCharm);
+- Ferramenta de design para banco de dados para rodar o script SQL. (Recomendamos MySQL Workbench);
+- Instalação de navegador atualizado (Recomendamos o uso do Google Chrome);
 
 Observação 1: Todas as instruções mencionadas neste documento são para usuários do sistema operacional Windows.
 
