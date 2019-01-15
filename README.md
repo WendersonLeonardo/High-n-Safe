@@ -17,16 +17,16 @@ Observação 2: Ao baixar o Python 3 em sua máquina, na tela inicial do instala
 3. No terminal do PyCharm, localizado na parte inferior do programa, digite o caminho “cd venv\Scripts”;
 4. Execute a máquina virtual com o comando “activate”;
 5. Execute o pip3 digitando o comando “python get-pip.py”;
-  a. Instale as bibliotecas com “pip3 install -r requisitos.txt”;
-6. No MySQL Workbench, crie uma nova conexão:
-  b. No campo “Hostname” insira “www.db4free.net”;
-  6.2. No campo “Port” insira “3306”;
-  6.3. No campo “Username” insira “alunoufrpe”;
-  6.4. Clique no botão “Store in Vault …”;
-  6.5. Insira “ufrpe2018.2” no campo Password e confirma;
-  6.6. No campo “Default Schema” insira “mydb_ufrpe” e confirma;
-7. Voltando ao terminal do PyCharm, execute o comando “python run.py runserver”;
-8. No navegador digite o endereço “127.0.0.1:5000/” e cofirme para abrir a aplicação;
+6. Instale as bibliotecas com “pip3 install -r requisitos.txt”;
+7. No MySQL Workbench, crie uma nova conexão:
+8 No campo “Hostname” insira “www.db4free.net”;
+9. No campo “Port” insira “3306”;
+10. No campo “Username” insira “alunoufrpe”;
+11. Clique no botão “Store in Vault …”;
+12. Insira “ufrpe2018.2” no campo Password e confirma;
+13. No campo “Default Schema” insira “mydb_ufrpe” e confirma;
+14. Voltando ao terminal do PyCharm, execute o comando “python run.py runserver”;
+15. No navegador digite o endereço “127.0.0.1:5000/” e cofirme para abrir a aplicação;
 
 # Equipe:
 
