@@ -26,7 +26,7 @@ Observação 2: Ao baixar o Python 3 em sua máquina, na tela inicial do instala
 12. Insira “ufrpe2018.2” no campo Password e confirma;
 13. No campo “Default Schema” insira “mydb_ufrpe” e confirma;
 14. Voltando ao terminal do PyCharm, execute o comando “python run.py runserver”;
-15. No navegador digite o endereço “127.0.0.1:5000/” e cofirme para abrir a aplicação;
+15. No navegador digite o endereço “http://127.0.0.1:5000/” e cofirme para abrir a aplicação;
 
 # Equipe:
 
