@@ -1,42 +1,37 @@
 # High-n-Safe
 
-# Python para Web usando Flask
-# Modo (MVC) ou 3 camadas   # Nome da pasta ↓ #
-# Models = Parte de Banco   < models >
-# View = HTML (GUI)         < static , templates >
-# Controller = Service      < controllers>
+# Condições mínimas para utilização:
+-Linguagem de programação Python 3;
+-Ambiente de desenvolvimento. (Recomendamos o PyCharm);
+-Ferramenta de design para banco de dados para rodar o script SQL. (Recomendamos MySQL Workbench);
+-Instalação de navegador atualizado (Recomendamos o uso do Google Chrome);
 
-# Requisito para Sistema Windowns
-# Python 3 acesse: https://www.python.org/ftp/python/3.7.2/python-3.7.2.exe para obter o python
-# Anaconda phompt acesse: https://repo.continuum.io/archive/Anaconda3-2018.12-Windows-x86_64.exe
-# Abrar o Anaconda phompt e digite : conda install -c anaconda python 
-# Microsoft Visual C++ 14.0 is required. Get it with "Microsoft Visual C++ Build Tools":
+Observação 1: Todas as instruções mencionadas neste documento são para usuários do sistema operacional Windows.
 
-# ====== Tutorial do Prompt de comando ===== #
-# 1 º Para iniciar Ative o VirtualEnv(maquina virtual) <- Como: Abra o Terminal(Prompt de comando) e navegue até a pasta do projeto \High-n-Safe\venv\Spripts\Activate
-# 2 º Agora com venv Ativado faça:
-# \High-n-Safe\pip3 install -r requisitos.txt          < - Para baixar as bibliotecas do Python - >
-# \High-n-Safe\run.py runserver (Prompt de comando)
+Observação 2: Ao baixar o Python 3 em sua máquina, na tela inicial do instalador, marcar a opção “Add Python 3.7 to PATH” para criar a variável de ambiente.
 
-# ======= Tutorial do Prompt de comando Anaconda
-# 1 º Para iniciar Ative o VirtualEnv(maquina virtual) <- Como: Abra o Terminal(Prompt de comando) e navegue até a pasta do projeto \High-n-Safe\venv\Spripts\Activate
-# 2 º Agora com venv Ativado faça:
-# pip3 install -r \High-n-Safe\requisitos.txt          < - Para baixar as bibliotecas do Python - >
-# \High-n-Safe\run.py (Prompt de comando)
+# Passo a passo para executar a aplicação:
 
-# ======= Tutorial do Vidal para DB ===== #
-#  acesse o https://www.db4free.net/phpMyAdmin
-# login : alunoufrpe
-# senha : ufrpe2018.2
-#  → no WorkBench voce pode conectar da mesma forma.
-# hostmane : www.db4free.net port 3306
-# username: alunoufrpe
-# Store in vault .. /password :ufrpe2018.2
-# schema: mydb_ufrpe
-#  → No VSCode baixem o extensão : vscode_ database
-# aperte CTRL + Shift + P
-# digite Sql connect , escolhar mysql :
-# hostname: www.db4free.net 
-# root/user: alunoufrpe
-# password: ufrpe2018.2
-# para ver as tabelas o banco esta online pessoal \o/
+1. Descompacte a pasta “High-n-Safe-master” que está disponível no link do projeto no GitHub;
+2. No PyCharm, abra o projeto na opção “Open”;
+3. No terminal do PyCharm, localizado na parte inferior do programa, digite o caminho “cd venv\Scripts”;
+4. Execute a máquina virtual com o comando “activate”;
+5. Execute o pip3 digitando o comando “python get-pip.py”;
+  5.1. Instale as bibliotecas com “pip3 install -r requisitos.txt”;
+6. No MySQL Workbench, crie uma nova conexão:
+  6.1. No campo “Hostname” insira “www.db4free.net”;
+  6.2. No campo “Port” insira “3306”;
+  6.3. No campo “Username” insira “alunoufrpe”;
+  6.4. Clique no botão “Store in Vault …”;
+  6.5. Insira “ufrpe2018.2” no campo Password e confirma;
+  6.6. No campo “Default Schema” insira “mydb_ufrpe” e confirma;
+7. Voltando ao terminal do PyCharm, execute o comando “python run.py runserver”;
+8. No navegador digite o endereço “127.0.0.1:5000/” e cofirme para abrir a aplicação;
+
+# Equipe:
+
+- Caroline Gomes;
+- Eliana França;
+- José Vidal;
+- Marcone Carlos;
+- Wenderson Leonardo.
