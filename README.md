@@ -17,9 +17,9 @@ Observação 2: Ao baixar o Python 3 em sua máquina, na tela inicial do instala
 3. No terminal do PyCharm, localizado na parte inferior do programa, digite o caminho “cd venv\Scripts”;
 4. Execute a máquina virtual com o comando “activate”;
 5. Execute o pip3 digitando o comando “python get-pip.py”;
-  5.1. Instale as bibliotecas com “pip3 install -r requisitos.txt”;
+  a. Instale as bibliotecas com “pip3 install -r requisitos.txt”;
 6. No MySQL Workbench, crie uma nova conexão:
-  6.1. No campo “Hostname” insira “www.db4free.net”;
+  b. No campo “Hostname” insira “www.db4free.net”;
   6.2. No campo “Port” insira “3306”;
   6.3. No campo “Username” insira “alunoufrpe”;
   6.4. Clique no botão “Store in Vault …”;
