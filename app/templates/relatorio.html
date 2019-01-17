@@ -10,13 +10,14 @@
 
 <body>
 <div class="jumbotron">
-   <h2>Relatórios</h2>
+   <h2><center>Selecione os campos obrigatórios a seguir:</center></h2>
    <br>
-   <form method="POST" action="{{ url_for('totalInsidenteRpa') }}">
+   <font face="Courier New" size="8">
+       <form  method="POST" action="{{ url_for('totalInsidenteRpa') }}">
        <div class="jumbotron">
            <br>
                <div class="input-group">
-                   <h3>Selecione o ano que deseja consultar:&nbsp</h3>
+                   <h3>Selecione o ano que deseja consultar:* &nbsp</h3>
                    <span class="input-group-addon"></span>
                        <select name="comp_select_ano" class="selectpicker form-control">
                            <option value=""></option>
@@ -29,9 +30,8 @@
                            <option value="2018">2018</option>
                       </select>
                </div>
-           <br>
            <div class="input-group">
-                   <h3>Selecione o região:&nbsp</h3>
+                   <h3>Selecione o região:* &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</h3>
                    <span class="input-group-addon"></span>
                        <select name="comp_select_regiao" class="selectpicker form-control">
                            <option value=''></option>
@@ -44,44 +44,40 @@
                       </select>
                </div>
            <br>
-           <div class="input-group">
-                   <h3>Selecione o tipo de risco:&nbsp</h3>
-                   <span class="input-group-addon"></span>
-                       <select name="comp_select_tipo_risco" class="selectpicker form-control">
-                           <option value=''></option>
-                           <option value='Não informado'>Não informado</option>
-                           <option value='R1 Baixo'>R1 Baixo</option>
-                           <option value='R2 Medio'>R2 Medio</option>
-                           <option value='R3 Alto'>R3 Alto</option>
-                           <option value='R4 Muito Alto'>R4 Muito Alto</option>
-                      </select>
-               </div>
-           <br>
-           <button type="submit" class="btn btn-lg btn-primary btn-block">Buscar</button>
+           <button type="submit" class="btn btn-lg btn-primary btn-block"><h3>Buscar</h3></button>
        </div>
    </form>
+   </font>
+    <h1><center>Relatório de Negligências com Vítimas:</center> </h1>
    <!--<form action="{{ url_for('totalInsidenteRpa') }}" method="post" class="ins-entrada">-->
-   <div id="lista">
-           {% if lista%}
-               <table>
+   <div id="lista" class="jumbotron">
+           {% if lista %}
+               <font face="Courier New" size="7">
+                   <table>
                    <tr>
-                       <th>RPA:</th>
-                       <td>{{lista[0][0][0]}}</td>
+                       <th><h3>RPA: </h3></th>
+                       <td><h4> {{lista[0][0][0]}} </h4></td>
+                   </tr>
+                   <br>
+                   <tr>
+                       <th><h3>CHAMADOS: </h3></th>
+                       <td><h4> {{lista[3]}} </h4></td>
                    </tr>
                    <tr>
-                       <th>CHAMADOS COM VISTORIA:</th>
-                       <td>{{lista[3]}}</td>
+                       <th><h3>VISTORIAS: </h3></th>
+                       <td><h4> {{lista[1]}} </h4></td>
                    </tr>
                    <tr>
-                       <th>VÍTIMAS:</th>
-                       <td>{{lista[1]}}</td>
+                       <th><h3>VÍTIMAS: </h3></th>
+                       <td><h4> {{lista[1]}} </h4></td>
                    </tr>
                    <tr>
-                       <th>VÍTIMAS FATAIS:</th>
-                       <td>{{lista[2]}}</td>
+                       <th><h3>VÍTIMAS FATAIS: </h3></th>
+                       <td><h4> {{lista[2]}} </h4></td>
                    </tr>
                </table>
-           {%endif%}
+               </font>
+           {% endif %}
     </div>
    <!--</form>-->
 </div>
