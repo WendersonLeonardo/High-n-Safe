@@ -44,7 +44,7 @@ def mapacalor():
             lista3.append([lat,long])
 
         except:
-            print("error")
+            pass
     pernambuco = folium.Map(location=[-8.0421584, -35.008676],zoom_start=10)
 
     #pernambuco.save('templates/hihihi.html')
@@ -57,8 +57,8 @@ def mapacalor():
 def mapaLonas():
     conexao = pymysql.connect(host='www.db4free.net',user='alunoufrpe',password='ufrpe2018.2',db='mydb_ufrpe')
     c = conexao.cursor()
-    #consulta = ''' select Latitude,Longitude from `localidade do chamado` where idLocalidade in(SELECT `Localidade do Chamado_idLocalidade` FROM mydb_ufrpe.processo as p , mydb_ufrpe.vistoria as v where p.Numero = v.Processo_Numero); '''
-    consulta = '''SELECT latitude,longitude FROM mydb_ufrpe.sedecchamados as c , mydb_ufrpe.sedeclonas as l where c.processo_numero = l.processo_numero and l.colocacao_lona_situacao = "Sim";'''
+    consulta = ''' select Latitude,Longitude from `Localidade do Chamado` where idLocalidade in(SELECT `Localidade do Chamado_idLocalidade` FROM mydb_ufrpe.processo as p , mydb_ufrpe.vistoria as v where p.Numero = v.Processo_Numero); '''
+    #consulta = '''SELECT latitude,longitude FROM mydb_ufrpe.sedecchamados as c , mydb_ufrpe.sedeclonas as l where c.processo_numero = l.processo_numero and l.colocacao_lona_situacao = "Sim";'''
     c.execute(consulta)
     resposta = c.fetchall()
     lista3=[]
@@ -69,7 +69,7 @@ def mapaLonas():
             lista3.append([lat,long])
 
         except:
-            print("error")
+            pass
     pernambuco = folium.Map(location=[-8.0421584, -35.008676],zoom_start=10)
 
 
@@ -84,8 +84,8 @@ def mapaLonas():
 def mapaCalorVistoria():
     conexao = pymysql.connect(host='www.db4free.net',user='alunoufrpe',password='ufrpe2018.2',db='mydb_ufrpe')
     c = conexao.cursor()
-    #consulta = ''' select Latitude,Longitude from `localidade do chamado` where idLocalidade in(SELECT `Localidade do Chamado_idLocalidade` FROM mydb_ufrpe.processo as p , mydb_ufrpe.vistoria as v where p.Numero = v.Processo_Numero); '''
-    consulta = '''SELECT `Latitude`, `Longitude` FROM `sedecvistorias` as vist, `sedecchamados` as chama WHERE vist.processo_numero = chama.processo_numero ;'''
+    consulta = ''' select Latitude,Longitude from `Localidade do Chamado` where idLocalidade in(SELECT `Localidade do Chamado_idLocalidade` FROM mydb_ufrpe.processo as p , mydb_ufrpe.vistoria as v where p.Numero = v.Processo_Numero); '''
+    #consulta = '''SELECT `Latitude`, `Longitude` FROM `sedecvistorias` as vist, `sedecchamados` as chama WHERE vist.processo_numero = chama.processo_numero ;'''
     c.execute(consulta)
     resposta = c.fetchall()
     lista3=[]
@@ -96,7 +96,7 @@ def mapaCalorVistoria():
             lista3.append([lat,long])
 
         except:
-            print("error")
+            pass
     pernambuco = folium.Map(location=[-8.0421584, -35.008676],zoom_start=10)
 
 
@@ -110,8 +110,8 @@ def mapaCalorVistoria():
 def mapaAcidentesVitimas():
     conexao = pymysql.connect(host='www.db4free.net',user='alunoufrpe',password='ufrpe2018.2',db='mydb_ufrpe')
     c = conexao.cursor()
-    #consulta = ''' SELECT l.Latitude, l.Longitude FROM mydb_ufrpe.solicitacao as s , mydb_ufrpe.`localidade do chamado` as l where s.Houve_Vitimas = "Sim" and s.`Localidade do Chamado_idLocalidade`= l.idLocalidade; '''
-    consulta = '''SELECT `latitude`,`longitude` FROM `sedecchamados` WHERE `solicitacao_vitimas` = "Sim" '''
+    consulta = ''' SELECT l.Latitude, l.Longitude FROM mydb_ufrpe.Solicitacao as s , mydb_ufrpe.`Localidade do Chamado` as l where s.Houve_Vitimas = "Sim" and s.`Localidade do Chamado_idLocalidade`= l.idLocalidade; '''
+    #consulta = '''SELECT `latitude`,`longitude` FROM `sedecchamados` WHERE `solicitacao_vitimas` = "Sim" '''
     c.execute(consulta)
     resposta = c.fetchall()
     lista=[]
@@ -122,7 +122,7 @@ def mapaAcidentesVitimas():
             lista.append([lat,long])
 
         except:
-            print("error")
+            pass
 
     pernambuco = folium.Map(location=[-8.0421584, -35.008676],zoom_start=10)
     #Marker
@@ -146,8 +146,8 @@ def mapaAcidentesVitimasFatais ():
     conexao = pymysql.connect(host='www.db4free.net',user='alunoufrpe',password='ufrpe2018.2',db='mydb_ufrpe')
     c = conexao.cursor()
 
-    #consulta= ''' SELECT l.Latitude, l.Longitude FROM mydb_ufrpe.solicitacao as s , mydb_ufrpe.`localidade do chamado` as l where s.Houve_Vitimas_fatais = "Sim" and s.`Localidade do Chamado_idLocalidade`= l.idLocalidade; '''
-    consulta = '''SELECT `latitude`,`longitude` FROM `sedecchamados` WHERE `solicitacao_vitimas_fatais` = "Sim" '''
+    consulta= ''' SELECT l.Latitude, l.Longitude FROM mydb_ufrpe.Solicitacao as s , mydb_ufrpe.`Localidade do Chamado` as l where s.Houve_Vitimas_fatais = "Sim" and s.`Localidade do Chamado_idLocalidade`= l.idLocalidade; '''
+    #consulta = '''SELECT `latitude`,`longitude` FROM `sedecchamados` WHERE `solicitacao_vitimas_fatais` = "Sim" '''
     c.execute(consulta)
     resposta = c.fetchall()
     lista=[]
@@ -157,7 +157,7 @@ def mapaAcidentesVitimasFatais ():
             long = float(x[1])
             lista.append([lat,long])
         except:
-            print("error")
+            pass
 
     pernambuco = folium.Map(location=[-8.0421584, -35.008676],zoom_start=10)
     #Marker
@@ -190,24 +190,26 @@ def totalInsidenteRpa():
         fatal = 0
 
         if regiao != '':
-            comp_select_regiao = "and sc.rpa_codigo='%s'" %(regiao)
+            comp_select_regiao = "and sc.rpa_id_rpa='%s'" %(regiao)
         if tipo_risco!='':
-            comp_select_tipo_risco = "and sv.vistoria_risco='%s'" %(tipo_risco)
+            comp_select_tipo_risco = "and sc.risco='%s'" %(tipo_risco)
         if ano!='':
-            comp_select_ano = "and sc.ano=%s " %(ano)
-
+            comp_select_ano = "and sc.`data`=%s " %(ano)
+            comp_select_ano2 = "and v.`data`=%s " %(ano)
         isSelect="Select nome from rpa where id_rpa=%s" %(regiao)
         conectar.execute(isSelect)
         retorno = conectar.fetchall()
         lista.append(retorno)
 
         if tipo_risco!='' or regiao!= '' or ano!='':
-            isSelect = """SELECT sc.solicitacao_vitimas, sc.solicitacao_vitimas_fatais FROM sedecchamados sc, sedecvistorias sv WHERE sc.processo_numero=sv.processo_numero %s %s %s""" %(comp_select_ano, comp_select_tipo_risco, comp_select_regiao)
+            isSelect = """SELECT Houve_Vitimas, Houve_Vitimas_fatais FROM   mydb_ufrpe.Solicitacao as v , mydb_ufrpe.vistoria as sc WHERE v.Processo_Numero = sc.Processo_Numero %s %s %s %s;"""%(comp_select_ano, comp_select_tipo_risco, comp_select_regiao,comp_select_ano2)
+           # isSelect = """SELECT sc.solicitacao_vitimas, sc.solicitacao_vitimas_fatais FROM sedecchamados sc, sedecvistorias sv WHERE sc.processo_numero=sv.processo_numero %s %s %s""" %(comp_select_ano, comp_select_tipo_risco, comp_select_regiao)
             conectar.execute(isSelect)
             retorno = conectar.fetchall()
 
         else:
-            isSelect = """select solicitacao_vitimas, solicitacao_vitimas_fatais from sedecchamados sc, sedecvistorias sv WHERE sc.processo_numero=sv.processo_numero """
+            isSelect = """SELECT Houve_Vitimas, Houve_Vitimas_fatais FROM   mydb_ufrpe.Solicitacao as v , mydb_ufrpe.vistoria as sc WHERE v.Processo_Numero = sc.Processo_Numero"""
+           # isSelect = """select solicitacao_vitimas, solicitacao_vitimas_fatais from sedecchamados sc, sedecvistorias sv WHERE sc.processo_numero=sv.processo_numero """
             conectar.execute(isSelect)
             retorno = conectar.fetchall()
 
@@ -257,14 +259,14 @@ def grafico_tempo_medio():
         if  comp_select_ano != '' and comp_select_ano != None:
             for r in rpa:
                 c = conexao.cursor()
-                consuta = '''select sedecvistorias.processo_numero, solicitacao_data, processo_data_conclusao
-                from sedecchamados, sedecvistorias
-                where sedecvistorias.processo_numero = sedecchamados.processo_numero
-                and sedecchamados.ano =''' + comp_select_ano + '''
-                and rpa_codigo =''' + r +'''
-                and processo_situacao = 'completo'
-                and solicitacao_data IS NOT null
-                and processo_data_conclusao IS NOT null;'''
+                consuta = '''select vistoria.processo_numero, Solicitacao.data, processo.data_conclusao
+                from vistoria, Solicitacao, processo
+                where vistoria.Processo_numero = Solicitacao.Processo_numero
+                and Solicitacao.data =''' + comp_select_ano + '''
+                and rpa_id_rpa =''' + r +'''
+                and processo.situacao = 'completo'
+                and Solicitacao.data IS NOT null
+                and processo.data_conclusao IS NOT null;'''
                 c.execute(consuta)
                 resporta = c.fetchall()
 
@@ -307,7 +309,7 @@ def grafico_negligencia():
                 c = conexao.cursor()
                 consuta = '''
                 select *
-                from sedecchamados where sedecchamados.rpa_codigo =''' + r + ''' and sedecchamados.ano =''' + comp_select_ano + ''' ;'''
+                from vistoria where vistoria.rpa_id_rpa =''' + r + ''' and vistoria.data =''' + comp_select_ano + ''' ;'''
                 c.execute(consuta)
                 resporta = c.fetchall()
                 count = len(resporta)
@@ -315,7 +317,7 @@ def grafico_negligencia():
                 c = conexao.cursor()
                 consuta = '''
                 select *
-                from sedecchamados, sedecvistorias where sedecchamados.processo_numero = sedecvistorias.processo_numero and sedecchamados.rpa_codigo =''' + r + ''' and sedecchamados.ano =''' + comp_select_ano + ''' ;'''
+                from Solicitacao, vistoria where Solicitacao.Processo_numero = vistoria.Processo_numero and vistoria.rpa_id_rpa =''' + r + ''' and vistoria.data =''' + comp_select_ano + ''' ;'''
                 c.execute(consuta)
                 resporta = c.fetchall()
                 count_vis = len(resporta)
@@ -349,7 +351,7 @@ def grafico_risco():
         if  comp_select_ano != '' and comp_select_ano != None and comp_select_risco != '' and comp_select_risco != None :
             for r in rpa:
                 c = conexao.cursor()
-                consuta = '''SELECT COUNT(processo_numero) FROM sedecvistorias WHERE ano =''' + comp_select_ano + ''' AND vistoria_risco =''' + risco + ''' AND vistoria_rpa_codigo =''' + r + ''';'''
+                consuta = '''SELECT COUNT(processo_numero) FROM vistoria WHERE data =''' + comp_select_ano + ''' AND risco =''' + risco + ''' AND rpa_id_rpa =''' + r + ''';'''
                 c.execute(consuta)
                 resporta = c.fetchall()
                 valor = str(resporta)
@@ -413,12 +415,12 @@ def grafico_vitima():
             for r in rpa:
                 c = conexao.cursor()
                 consuta = '''
-                select distinct(sedecchamados.processo_numero)
-                            from Solicitacao, sedecchamados
-                            where sedecchamados.Processo_Numero = Solicitacao.processo_numero
+                select distinct(vistoria.Processo_numero)
+                            from Solicitacao, vistoria
+                            where vistoria.Processo_Numero = Solicitacao.processo_numero
                             and Houve_Vitimas_fatais = 'Sim'
-                            and sedecchamados.rpa_codigo =''' + r + '''
-                            and sedecchamados.ano =''' + comp_select_ano + ''' ;'''
+                            and vistoria.rpa_id_rpa =''' + r + '''
+                            and vistoria.data =''' + comp_select_ano + ''' ;'''
                 c.execute(consuta)
                 resporta = c.fetchall()
                 count = 0
