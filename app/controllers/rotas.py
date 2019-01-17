@@ -117,37 +117,31 @@ def totalInsidenteRpa():
         conexao = pymysql.connect(host='www.db4free.net',user='alunoufrpe',password='ufrpe2018.2',db='mydb_ufrpe')
         conectar = conexao.cursor()
 
-        regiao=request.form.get("comp_select_regiao")
-        tipo_risco=request.form.get("comp_select_tipo_risco")
-        ano=request.form.get("comp_select_ano")
+        regiao = request.form.get("comp_select_regiao")
+        tipo_risco = request.form.get("comp_select_tipo_risco")
+        ano = request.form.get("comp_select_ano")
 
         lista = []
         vitima = 0
         fatal = 0
 
-        if regiao != '':
-            comp_select_regiao = "and sc.rpa_id_rpa='%s'" %(regiao)
-        if tipo_risco!='':
-            comp_select_tipo_risco = "and sc.risco='%s'" %(tipo_risco)
-        if ano!='':
-            comp_select_ano = "and sc.`data`=%s " %(ano)
-            comp_select_ano2 = "and v.`data`=%s " %(ano)
-        isSelect="Select nome from rpa where id_rpa=%s" %(regiao)
+        isSelect = "Select nome from rpa where id_rpa=%s" %(regiao)
         conectar.execute(isSelect)
         retorno = conectar.fetchall()
         lista.append(retorno)
 
-        if tipo_risco!='' or regiao!= '' or ano!='':
-            isSelect = """SELECT Houve_Vitimas, Houve_Vitimas_fatais FROM   mydb_ufrpe.Solicitacao as v , mydb_ufrpe.vistoria as sc WHERE v.Processo_Numero = sc.Processo_Numero %s %s %s %s;"""%(comp_select_ano, comp_select_tipo_risco, comp_select_regiao,comp_select_ano2)
-           # isSelect = """SELECT sc.solicitacao_vitimas, sc.solicitacao_vitimas_fatais FROM sedecchamados sc, sedecvistorias sv WHERE sc.processo_numero=sv.processo_numero %s %s %s""" %(comp_select_ano, comp_select_tipo_risco, comp_select_regiao)
+        if tipo_risco != '' and regiao != '' and ano != '':
+
+            comp_select_regiao = "and sc.rpa_codigo='%s'" %(regiao)
+            comp_select_ano = "sc.ano=%s " %(ano)
+
+            isSelect = """SELECT sc.solicitacao_vitimas, sc.solicitacao_vitimas_fatais FROM sedecchamados sc 
+            WHERE %s %s""" %(comp_select_ano, comp_select_regiao)
             conectar.execute(isSelect)
             retorno = conectar.fetchall()
 
         else:
-            isSelect = """SELECT Houve_Vitimas, Houve_Vitimas_fatais FROM   mydb_ufrpe.Solicitacao as v , mydb_ufrpe.vistoria as sc WHERE v.Processo_Numero = sc.Processo_Numero"""
-           # isSelect = """select solicitacao_vitimas, solicitacao_vitimas_fatais from sedecchamados sc, sedecvistorias sv WHERE sc.processo_numero=sv.processo_numero """
-            conectar.execute(isSelect)
-            retorno = conectar.fetchall()
+            return render_template('relatorio.html')
 
         for i in retorno:
             if i[0] == 'Sim':
