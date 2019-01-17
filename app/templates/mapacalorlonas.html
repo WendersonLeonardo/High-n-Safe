@@ -1,0 +1,22 @@
+
+{% extends 'base.html' %}
+{% block content %}
+
+
+    <div class = "responsive">
+      <!--<p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>-->
+      <iframe src="/mcl" width="1000" height="800"></iframe>
+    </div>
+      <div>
+  </div>
+    <div class="col-md-4">
+      <h2>Numero de Lonas por RPA</h2>
+      <p>em ordem decrescente.</p>
+      <!--<p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>-->
+      <dl>
+        {% for x in rpa %}
+        <dd>  <a href='{{x[2]}}'> {{x[0]}} - {{x[1]}} - {{x[3]}} % </a>   </dd>
+        {% endfor %}
+      </dl>
+    </div>
+{% endblock %}

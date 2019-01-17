@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>{{ title }}</title>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
+    <link rel="stylesheet" href="\static\css\style5.css">
+</head>
+
+<body>
+<div class="jumbotron">
+    <h2>Mapa de Calor dos Chamados por RPA</h2>
+    <br>
+    <form method="POST" action="{{ url_for('opcaorpa') }}">
+        <div class="jumbotron">
+            <!--<h2>Buscar por: </h2>-->
+            <br>
+            <div class="input-group">
+                <h3>Selecione a RPA que deseja consultar:&nbsp</h3>
+                <span class="input-group-addon"></span>
+                <select name="rpa_opcao" class="selectpicker form-control">
+                    <option value=""></option>
+                    <option value="RPA1">RPA1</option>
+                    <option value="RPA2">RPA2</option>
+                    <option value="RPA3">RPA3</option>
+                    <option value="RPA4">RPA4</option>
+                    <option value="RPA5">RPA5</option>
+                    <option value="RPA6">RPA6</option>
+                    <option value="Todas">Todas</option>
+               </select>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-lg btn-primary btn-block">Buscar</button>
+        </div>
+    </form>
+<br>
+
+<div class="col-md-4">
+    <h2>Numero de Chamados por RPA</h2>
+    <p>em ordem decrescente.</p>
+    <!--<p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>-->
+    <dl>
+      {% for x in rpa %}
+      <dd>  <a href='{{x[2]}}'> {{x[0]}} - {{x[1]}} - {{x[3]}} % </a>   </dd>
+      {% endfor %}
+    </dl>
+  </div>
+
+
+</body>
+{% endblock %}

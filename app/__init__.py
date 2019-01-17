@@ -7,3 +7,4 @@ app = Flask(__name__)
 
 
 from app.controllers import rotas
+from app.controllers import mapas
