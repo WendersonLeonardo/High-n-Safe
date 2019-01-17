@@ -156,17 +156,19 @@ def mapaLonas():
             a = verde
 
             if a == False:
+                
                 consulta = '''SELECT latitude,longitude 
-                FROM mydb_ufrpe.sedecchamados as c , mydb_ufrpe.sedeclonas as l 
-                where (c.processo_numero = l.processo_numero and l.colocacao_lona_situacao = "Sim") ;''' 
+                FROM mydb_ufrpe.processo as p , mydb_ufrpe.`Colocacao Lonas` as c, mydb_ufrpe.`Localidade do Chamado` as l 
+                where p.Numero = c.Processo_Numero and c.situacao = 'Sim' and p.`Localidade do Chamado_idLocalidade` = l.idLocalidade
+                '''
 
             else:
                 
-
+                
                 consulta = '''SELECT latitude,longitude 
-                FROM mydb_ufrpe.sedecchamados as c , mydb_ufrpe.sedeclonas as l 
-                where (c.processo_numero = l.processo_numero and l.colocacao_lona_situacao = "Sim") and 
-                `rpa_nome` = '''+a+''';'''
+                FROM mydb_ufrpe.processo as p , mydb_ufrpe.`Colocacao Lonas` as c, mydb_ufrpe.`Localidade do Chamado` as l 
+                where p.Numero = c.Processo_Numero and c.situacao = 'Sim' and p.`Localidade do Chamado_idLocalidade` = l.idLocalidade
+                l.`rpa_id_rpa` = '''+a+''';'''
 
 
             c.execute(consulta)
@@ -189,14 +191,12 @@ def mapaLonas():
 
         retorno = request.form.get("rpa_opcao")
 
-        
-
-        rpa1 = '1-CENTRO'
-        rpa2 = '2-NORTE'
-        rpa3 = '3-NOROESTE'
-        rpa4 = '4-NORDESTE'
-        rpa5 = '5-SUDOESTE'
-        rpa6 = '6-SUL'
+        rpa1 = '1'
+        rpa2 = '2'
+        rpa3 = '3'
+        rpa4 = '4'
+        rpa5 = '5'
+        rpa6 = '6'
 
 
         if retorno == rpa1:
@@ -229,15 +229,11 @@ def mapaLonas():
             return render_template('mapacalorlonas.html')
     
     
-    
-    
-    
     if request.method == "GET":
 
         conexao = pymysql.connect(host='www.db4free.net',user='alunoufrpe',password='ufrpe2018.2',db='mydb_ufrpe')
         c = conexao.cursor()
     
-
 
         consulta2 = '''SELECT `rpa_nome` ,count(`rpa_nome`) 
         from mydb_ufrpe.`sedecchamados` as c , mydb_ufrpe.sedeclonas as l 
@@ -265,7 +261,7 @@ def mapaLonas():
         
 
         return render_template('mapalonasporrpa.html', rpa = re2)
-
+    return render_template('mapalonasporrpa.html')
 
 @app.route('/mcl')
 def mcl():
@@ -275,3 +271,68 @@ def mcl():
 @app.route('/mcc')
 def mcc():
     return render_template('map_test2.html')
+
+
+
+@app.route("/mapaCalorVistoria")
+def mapaCalorVistoria():
+    conexao = pymysql.connect(host='www.db4free.net',user='alunoufrpe',password='ufrpe2018.2',db='mydb_ufrpe')
+    c = conexao.cursor()
+    consulta = ''' select Latitude,Longitude from `Localidade do Chamado` 
+    where idLocalidade in(SELECT `Localidade do Chamado_idLocalidade` 
+    FROM mydb_ufrpe.processo as p , mydb_ufrpe.vistoria as v where p.Numero = v.Processo_Numero); '''
+    #consulta = '''SELECT `Latitude`, `Longitude` FROM `sedecvistorias` as vist, `sedecchamados` as chama WHERE vist.processo_numero = chama.processo_numero ;'''
+    c.execute(consulta)
+    resposta = c.fetchall()
+    lista3=[]
+    for x in resposta:
+        try:
+            lat = float(x[0])
+            long = float(x[1])
+            lista3.append([lat,long])
+
+        except:
+            pass
+
+
+
+        consulta2 = '''SELECT `rpa_nome` ,count(`rpa_nome`) 
+        from mydb_ufrpe.`sedecchamados` as c , mydb_ufrpe.vistoria as v 
+        where c.processo_numero = v.processo_numero 
+        GROUP BY `rpa_nome` '''
+
+        c.execute(consulta2)
+        re = c.fetchall()
+        re2 =[]
+        total = 0
+        for x in re:
+            total = x[1] + total
+
+        for x in re:
+            nomeRpa = x[0]
+            qtdChamados = x[1]
+            link = 'http://www2.recife.pe.gov.br/servico/sobre-rpa-' + nomeRpa[0]
+            percentual = qtdChamados/total*100
+            string = ("%.2f" % percentual)
+            re2.append([nomeRpa, qtdChamados, link, string])
+        re2.sort(reverse = True,key=lambda x:x[1])
+
+
+    
+    pernambuco = folium.Map(location=[-8.0421584, -35.008676],zoom_start=10)
+
+
+    pernambuco.add_child(plugins.HeatMap(lista3,min_opacity=0.7,max_val=0.5,))
+
+
+    pernambuco.add_child(plugins.HeatMap(lista3,min_opacity=0.7,max_val=0.5,))
+    map_path = app.root_path + '/templates' + '/' + 'map_vistorias.html'
+    pernambuco.save(map_path)
+
+
+    return render_template ('mapaVistoria.html', resporta = rpa)
+
+
+@app.route('/mcv')
+def mcv():
+    return render_template('map_vistorias.html')

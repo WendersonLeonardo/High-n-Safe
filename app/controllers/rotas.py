@@ -29,85 +29,12 @@ def bdView():
 
     return (str(resporta))
 
-<<<<<<< HEAD
-=======
-@app.route("/m",methods=["GET", "POST"])
-def mapacalor():
-    conexao = pymysql.connect(host='www.db4free.net',user='alunoufrpe',password='ufrpe2018.2',db='mydb_ufrpe')
-    c = conexao.cursor()
-    consulta = '''SELECT `Latitude`, `Longitude` FROM `Localidade do Chamado` WHERE `Endereco`!= "teste" or `Endereco`!= "TESTE";'''
-    c.execute(consulta)
-    resposta = c.fetchall()
-    lista3=[]
-    for x in resposta:
-        try:
-            lat = float(x[0])
-            long = float(x[1])
-            lista3.append([lat,long])
 
-        except:
-            pass
-    pernambuco = folium.Map(location=[-8.0421584, -35.008676],zoom_start=10)
-
-    #pernambuco.save('templates/hihihi.html')
-    #iframe = pernambuco.repr_html_()
-    pernambuco.add_child(plugins.HeatMap(lista3,min_opacity=0.7,max_val=0.5,))
-    html_string = pernambuco.get_root().render()
-    return (html_string)
-
-@app.route("/mapaLonas")
-def mapaLonas():
-    conexao = pymysql.connect(host='www.db4free.net',user='alunoufrpe',password='ufrpe2018.2',db='mydb_ufrpe')
-    c = conexao.cursor()
-    consulta = ''' select Latitude,Longitude from `Localidade do Chamado` where idLocalidade in(SELECT `Localidade do Chamado_idLocalidade` FROM mydb_ufrpe.processo as p , mydb_ufrpe.vistoria as v where p.Numero = v.Processo_Numero); '''
-    #consulta = '''SELECT latitude,longitude FROM mydb_ufrpe.sedecchamados as c , mydb_ufrpe.sedeclonas as l where c.processo_numero = l.processo_numero and l.colocacao_lona_situacao = "Sim";'''
-    c.execute(consulta)
-    resposta = c.fetchall()
-    lista3=[]
-    for x in resposta:
-        try:
-            lat = float(x[0])
-            long = float(x[1])
-            lista3.append([lat,long])
-
-        except:
-            pass
-    pernambuco = folium.Map(location=[-8.0421584, -35.008676],zoom_start=10)
-
-
-    pernambuco.add_child(plugins.HeatMap(lista3,min_opacity=0.7,max_val=0.5,))
-    html_string = pernambuco.get_root().render()
-    return (html_string)
->>>>>>> 36474578ebd2054372002661008c613f43dabe9b
 
 
 #########   mapa dentro do mapa    ######
 
 #############################################
-
-@app.route("/mapaCalorVistoria")
-def mapaCalorVistoria():
-    conexao = pymysql.connect(host='www.db4free.net',user='alunoufrpe',password='ufrpe2018.2',db='mydb_ufrpe')
-    c = conexao.cursor()
-    consulta = ''' select Latitude,Longitude from `Localidade do Chamado` where idLocalidade in(SELECT `Localidade do Chamado_idLocalidade` FROM mydb_ufrpe.processo as p , mydb_ufrpe.vistoria as v where p.Numero = v.Processo_Numero); '''
-    #consulta = '''SELECT `Latitude`, `Longitude` FROM `sedecvistorias` as vist, `sedecchamados` as chama WHERE vist.processo_numero = chama.processo_numero ;'''
-    c.execute(consulta)
-    resposta = c.fetchall()
-    lista3=[]
-    for x in resposta:
-        try:
-            lat = float(x[0])
-            long = float(x[1])
-            lista3.append([lat,long])
-
-        except:
-            pass
-    pernambuco = folium.Map(location=[-8.0421584, -35.008676],zoom_start=10)
-
-
-    pernambuco.add_child(plugins.HeatMap(lista3,min_opacity=0.7,max_val=0.5,))
-    html_string = pernambuco.get_root().render()
-    return (html_string)
 
 
 
